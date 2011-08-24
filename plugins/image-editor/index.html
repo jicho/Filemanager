@@ -87,7 +87,8 @@
             //target: '#uploadresponse',
             beforeSubmit: function (arr, form, options) {
                 // disable button
-                $('#save-crop').attr('disabled', true);
+                $('#save').attr('disabled', true);
+                $('#save span').addClass("loading").text("Saving image");
             },
             success: function (result) {
                 //window.close();
@@ -103,9 +104,10 @@
                 } else {
                     // display error
                     $.prompt(data['Error']);
-                    
+
                     // activate button
-                    $('#save-crop').removeAttr('disabled');
+                    $('#save').removeAttr('disabled');
+                    $('#save span').removeClass("loading").text("Save selection");
                 }
             }
         });
