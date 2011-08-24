@@ -29,5 +29,8 @@ var fileRoot = '/' + am + 'userfiles/';
 // Show image previews in grid views?
 var showThumbs = true;
 
+// Show edit button, when showing you need to have the "image-editor" plugin
+var showEdit = true;
+
 // Allowed image extensions when type is 'image'
 var imagesExt = ['jpg', 'jpeg', 'gif', 'png'];

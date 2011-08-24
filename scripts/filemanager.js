@@ -266,7 +266,7 @@
         }
 
         // image editor
-        if (!has_capability(data, 'edit')) {
+        if (!has_capability(data, 'edit') || showEdit == false) {
             $('#fileinfo').find('button#edit').hide();
         } else {
             $('#fileinfo').find('button#edit').click(function () {
@@ -566,7 +566,7 @@
             if (!elem.hasClass('cap_download')) $('.download', newOptions).remove();
             if (!elem.hasClass('cap_rename')) $('.rename', newOptions).remove();
             if (!elem.hasClass('cap_delete')) $('.delete', newOptions).remove();
-            if (!elem.hasClass('cap_edit')) $('.edit', newOptions).remove();
+            if (!elem.hasClass('cap_edit') || showEdit == false) $('.edit', newOptions).remove();
             $('#itemOptions').after(newOptions);
         }
         return optionsID;
@@ -887,7 +887,11 @@
             $('#fileinfo h1').append(lg.select_from_left);
             $('#itemOptions a[href$="#select"]').append(lg.select);
             $('#itemOptions a[href$="#download"]').append(lg.download);
-            $('#itemOptions a[href$="#edit"]').append(lg.edit);
+
+            if (showEdit == true) {
+                $('#itemOptions a[href$="#edit"]').append(lg.edit);
+            }
+            
             $('#itemOptions a[href$="#rename"]').append(lg.rename);
             $('#itemOptions a[href$="#delete"]').append(lg.del);
         }
