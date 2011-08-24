@@ -30,7 +30,7 @@ var fileRoot = '/' + am + 'userfiles/';
 var showThumbs = true;
 
 // Show edit button, when showing you need to have the "image-editor" plugin
-var showEdit = true;
+var showEdit = false;
 
 // Allowed image extensions when type is 'image'
 var imagesExt = ['jpg', 'jpeg', 'gif', 'png'];
