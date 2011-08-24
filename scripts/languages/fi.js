@@ -27,6 +27,7 @@
 	"new_filename": "Anna tiedostolle uusi nimi",
 	"successful_rename": "Uudelleen nimeäminen onnistui.",
 	"rename": "Nimeä uudelleen",
+	"edit": "Edit",
 	"confirmation_delete": "Oletko varma, että haluat poistaa kyseisen tiedoston?",
 	"successful_delete": "Poisto onnistui.",
 	"successful_added_file": "Uusi tiedosto lisätty onnistuneesti.",
@@ -52,5 +53,6 @@
 	"bytes": " tavua",
 	"kb": "kt",
 	"mb": "Mt",
-	"gb": "Gt"
+	"gb": "Gt",
+	"edit_image_only": "Je kunt alleen afbeeldingen bewerken"
 }

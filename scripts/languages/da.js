@@ -27,6 +27,7 @@
 	"new_filename": "Skriv et nyt navn for filen",
 	"successful_rename": "Omdøbt med succes.",
 	"rename": "Omdøb",
+	"edit": "Edit",
 	"confirmation_delete": "Er du sikker på du ønsker at slette filen?",
 	"successful_delete": "Slettet med succes.",
 	"successful_added_file": "Den nye fil blev tilføjet.",
@@ -52,5 +53,6 @@
 	"bytes": " bytes",
 	"kb": "kb",
 	"mb": "mb",
-	"gb": "gb"
+	"gb": "gb",
+	"edit_image_only": "Je kunt alleen afbeeldingen bewerken"
 }

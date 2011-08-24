@@ -26,6 +26,7 @@
 	"new_filename": "输入一个文件的新名称",
 	"successful_rename": "重命名成功。",
 	"rename": "重命名",
+	"edit": "Edit",
 	"confirmation_delete": "你确定要删除这个文件吗？",
 	"successful_delete": "删除成功。",
 	"successful_added_file": "新文件添加成功。",
@@ -48,5 +49,6 @@
 	"grid_view": "切换到网格视图.",
 	"list_view": "切换到列表视图.",
 	"current_folder": "当前文件夹: ",
-    "gotoroot": "根文件夹"
+    "gotoroot": "根文件夹",
+	"edit_image_only": "Je kunt alleen afbeeldingen bewerken"
 }

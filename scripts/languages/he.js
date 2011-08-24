@@ -27,6 +27,7 @@
     "new_filename": "הכנס שם חדש לקובץ",
     "successful_rename": "השם שונה בהצלחה",
     "rename": "שנה שם",
+    "edit": "Edit",
     "confirmation_delete": "?האם אתה בטוח שברצונך למחוק קובץ זה",
     "successful_delete": "הקובץ נמחק",
     "successful_added_file": "הקובץ נוסף בהצלחה",
@@ -52,5 +53,6 @@
     "bytes": " bytes",
     "kb": "kb",
     "mb": "mb",
-    "gb": "gb"
+    "gb": "gb",
+	"edit_image_only": "Je kunt alleen afbeeldingen bewerken"
 }

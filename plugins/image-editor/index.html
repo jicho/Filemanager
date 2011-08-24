@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Image editor</title>
+<link rel="stylesheet" type="text/css" href="../../scripts/jquery.imgareaselect/css/imgareaselect-default.css" />
+<link rel="stylesheet" type="text/css" href="../../styles/filemanager.css" />
+<link rel="stylesheet" type="text/css" href="../../plugins/image-editor/style.css" />
+</head>
+<body>
+
+<!-- upload form -->
+<form id="save-image" method="get">
+    <input type="hidden" id="path" name="path" value="" />
+    <input type="hidden" name="x1" value="" />
+    <input type="hidden" name="y1" value="" />
+    <input type="hidden" name="width" value="" />
+    <input type="hidden" name="height" value="" />
+    <button id="save">Save selection</button>
+</form>
+
+<p>
+    Make your selection and press "Save selection"
+</p>
+
+<!-- photo -->
+<div>
+    <img id="photo" src="" />
+</div>
+
+<script type="text/javascript" src="../../scripts/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="../../scripts/jquery.form-2.63.js"></script>
+<script type="text/javascript" src="../../scripts/jquery.impromptu-3.1.min.js"></script>
+<script type="text/javascript" src="../../scripts/jquery.imgareaselect/jquery.imgareaselect.min.js"></script>
+<script type="text/javascript" src="../../scripts/filemanager.config.js"></script>
+
+<script type="text/javascript">
+(function ($) {
+    // function to retrieve GET params
+    $.urlParam = function (name) {
+        var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        if (results)
+            return results[1];
+        else
+            return 0;
+    };
+
+    // Sets paths to connectors based on language selection.
+    var fileConnector = '../../connectors/' + lang + '/filemanager.' + lang + '?mode=crop';
+    var imgPath = $.urlParam('path');
+
+    //$(function () {
+    $(document).ready(function () {
+        jQuery.ajaxSetup({
+            // Disable caching of AJAX responses 
+            cache: false
+        });
+
+        // cosmetic tweak for buttons
+        $('button').wrapInner('<span></span>');
+
+        // disable save button
+        $('#save').attr('disabled', true);
+
+        // set image path
+        $('#path').val(imgPath);
+
+        // set image source
+        $('#photo').attr('src', imgPath);
+
+        // start up image editor
+        $('img#photo').imgAreaSelect({
+            handles: true,
+            onSelectEnd: function (img, selection) {
+                $('input[name=x1]').val(selection.x1);
+                $('input[name=y1]').val(selection.y1);
+                $('input[name=width]').val(selection.width);
+                $('input[name=height]').val(selection.height);
+
+                $('#save').attr('disabled', false);
+            }
+        });
+
+        // save crop
+        $('#save-image').attr('action', fileConnector);
+        $('#save-image').ajaxForm({
+            //target: '#uploadresponse',
+            beforeSubmit: function (arr, form, options) {
+                // disable button
+                $('#save-crop').attr('disabled', true);
+            },
+            success: function (result) {
+                //window.close();
+
+                var data = jQuery.parseJSON(result);
+
+                if (data['Code'] == 0) {
+                    // refresh opener window
+                    window.opener.$.getFolderInfo(data['Path'].substr(0, data['Path'].lastIndexOf('/') + 1));
+
+                    // close popup
+                    window.close();
+                } else {
+                    // display error
+                    $.prompt(data['Error']);
+                    
+                    // activate button
+                    $('#save-crop').removeAttr('disabled');
+                }
+            }
+        });
+    });
+
+})(jQuery);
+</script>
+</body>
+</html>

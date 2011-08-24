@@ -27,6 +27,8 @@
 	"new_filename": "Entrer un nouveau nom pour votre fichier",
 	"successful_rename": "Renommage réalisé avec succès.",
 	"rename": "Renommer",
+	"edit": "Edit",
+	"edit": "Editer",
 	"confirmation_delete": "Etes-vous sûr de vouloir supprimer ce fichier?",
 	"successful_delete": "Suppression réalisée avec succès.",
 	"successful_added_file": "Nouveau fichier ajouté avec succès.",
@@ -52,5 +54,6 @@
 	"bytes": " octets",
 	"kb": "ko",
 	"mb": "mo",
-	"gb": "go"
+	"gb": "go",
+	"edit_image_only": "Je kunt alleen afbeeldingen bewerken"
 }

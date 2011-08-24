@@ -26,6 +26,7 @@
 	"new_filename": "Wpisz nową nazwę. Nie używaj polskich znaków.",
 	"successful_rename": "Nazwa pliku została zmieniona.",
 	"rename": "Zmień nazwę",
+	"edit": "Edit",
 	"confirmation_delete": "Czy na pewno chcesz usunąć wybrany plik?",
 	"successful_delete": "Usunięto plik.",
 	"successful_added_file": "Dodano nowy plik.",
@@ -51,5 +52,6 @@
 	"bytes": " bytes",
 	"kb": "kb",
 	"mb": "mb",
-	"gb": "gb"
+	"gb": "gb",
+	"edit_image_only": "Je kunt alleen afbeeldingen bewerken"
 }

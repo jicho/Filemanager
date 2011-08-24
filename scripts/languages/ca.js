@@ -27,6 +27,7 @@
 	"new_filename": "Introdueix un nou nom per l'arxiu",
 	"successful_rename": "Canvi de nom amb èxit.",
 	"rename": "Canviar el nom",
+	"edit": "Edit",
 	"confirmation_delete": "Estàs segur de voler eliminar aquest arxiu?",
 	"successful_delete": "Eliminació amb èxit.",
 	"successful_added_file": "Nou arxiu afegit satisfactòriament.",
@@ -52,6 +53,7 @@
 	"bytes": " bytes",
 	"kb": "kb",
 	"mb": "mb",
-	"gb": "gb"
+	"gb": "gb",
+	"edit_image_only": "Je kunt alleen afbeeldingen bewerken"
 }
     

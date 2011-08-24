@@ -27,6 +27,7 @@
 	"new_filename": "Vul een nieuwe naam in voor het bestand",
 	"successful_rename": "De naam is gewijzigd.",
 	"rename": "Naam wijzigen",
+	"edit": "Edit",
 	"confirmation_delete": "Weet je zeker dat je dit bestand wilt verwijderen?",
 	"successful_delete": "Het bestand is verwijderd.",
 	"successful_added_file": "Het nieuwe bestand is toegevoegd.",
@@ -52,5 +53,6 @@
 	"bytes": " bytes",
 	"kb": "kb",
 	"mb": "mb",
-	"gb": "gb"
+	"gb": "gb",
+	"edit_image_only": "Je kunt alleen afbeeldingen bewerken"
 }

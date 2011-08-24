@@ -27,6 +27,7 @@
 	"new_filename": "新しいファイル名を記入してください.",
 	"successful_rename": "ファイル名変更に成功しました.",
 	"rename": "ファイル名変更",
+	"edit": "Edit",
 	"confirmation_delete": "本当にこのファイルを削除してもいいですか?",
 	"successful_delete": "消去に成功しました.",
 	"successful_added_file": "新しいファイルの追加に成功しました.",
@@ -52,5 +53,6 @@
 	"bytes": "バイト",
 	"kb": "kb",
 	"mb": "mb",
-	"gb": "gb"
+	"gb": "gb",
+	"edit_image_only": "Je kunt alleen afbeeldingen bewerken"
 }

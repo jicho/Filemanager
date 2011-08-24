@@ -27,6 +27,7 @@
 	"new_filename": "Gib einen neuen Namen für die Datei an",
 	"successful_rename": "Erfolgreich umbenannt.",
 	"rename": "Umbenennen",
+	"edit": "Edit",
 	"confirmation_delete": "Möchtest Du wirklich diese Datei löschen?",
 	"successful_delete": "Erfolgreich gelöscht.",
 	"successful_added_file": "Neue Datei wurde erfolgreich hinzugefügt.",
@@ -52,5 +53,6 @@
 	"bytes": " bytes",
 	"kb": "kb",
 	"mb": "mb",
-	"gb": "gb"
+	"gb": "gb",
+	"edit_image_only": "Je kunt alleen afbeeldingen bewerken"
 }

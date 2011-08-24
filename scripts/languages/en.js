@@ -27,6 +27,7 @@
 	"new_filename": "Enter a new name for the file",
 	"successful_rename": "Rename successful.",
 	"rename": "Rename",
+	"edit": "Edit",
 	"confirmation_delete": "Are you sure you wish to delete this file?",
 	"successful_delete": "Delete successful.",
 	"successful_added_file": "New file added successfully.",
@@ -52,5 +53,6 @@
 	"bytes": " bytes",
 	"kb": "kb",
 	"mb": "mb",
-	"gb": "gb"
+	"gb": "gb",
+	"edit_image_only": "You can only edit images"
 }

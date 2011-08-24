@@ -27,6 +27,7 @@
 	"new_filename": "Zadejte nový název položky",
 	"successful_rename": "Položka byla úspěšně přejmenována.",
 	"rename": "Přejmenovat",
+	"edit": "Edit",
 	"confirmation_delete": "Jste si doopravdy jist, že chcete smazat tuto položku?",
 	"successful_delete": "Položka byla odstraněna.",
 	"successful_added_file": "Soubor byl úspěšně vytvořen.",
@@ -52,5 +53,6 @@
 	"bytes": " bytes",
 	"kb": "kb",
 	"mb": "mb",
-	"gb": "gb"
+	"gb": "gb",
+	"edit_image_only": "Je kunt alleen afbeeldingen bewerken"
 }

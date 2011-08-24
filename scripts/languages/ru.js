@@ -27,6 +27,7 @@
 	"new_filename": "Введите новое имя файла",
 	"successful_rename": "Переименование успешно.",
 	"rename": "Переименовать",
+	"edit": "Edit",
 	"confirmation_delete": "Вы уверены, что хотите удалить этот файл?",
 	"successful_delete": "Удаление прошло успешно.",
 	"successful_added_file": "Новый файл добавлен успешно.",
@@ -52,5 +53,6 @@
 	"bytes": " байт",
 	"kb": "Кб",
 	"mb": "Мб",
-	"gb": "Гб"
+	"gb": "Гб",
+	"edit_image_only": "Je kunt alleen afbeeldingen bewerken"
 }

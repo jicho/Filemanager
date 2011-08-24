@@ -27,6 +27,7 @@
     "new_filename": "Nhập tên tập tin mới",
     "successful_rename": "Đã đổi tên.",
     "rename": "Đổi tên",
+    "edit": "Edit",
     "confirmation_delete": "Bạn chắc chắn muốn xóa tập tin này?",
     "successful_delete": "Đã xóa.",
     "successful_added_file": "Đã thêm tập tin.",
@@ -52,5 +53,6 @@
     "bytes": " bytes",
     "kb": "kb",
     "mb": "mb",
-    "gb": "gb"
+    "gb": "gb",
+	"edit_image_only": "Je kunt alleen afbeeldingen bewerken"
 }

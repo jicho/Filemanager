@@ -1,0 +1,10 @@
+D:\Projects\DotNet\C5FileManager\obj\Debug\ResolveAssemblyReference.cache
+D:\Projects\DotNet\C5FileManager\bin\C5FileManager.dll
+D:\Projects\DotNet\C5FileManager\bin\C5FileManager.pdb
+D:\Projects\DotNet\C5FileManager\obj\Debug\C5FileManager.dll
+D:\Projects\DotNet\C5FileManager\obj\Debug\C5FileManager.pdb
+D:\Git\Filemanager\bin\C5FileManager.dll
+D:\Git\Filemanager\bin\C5FileManager.pdb
+D:\Git\Filemanager\obj\Debug\ResolveAssemblyReference.cache
+D:\Git\Filemanager\obj\Debug\C5FileManager.dll
+D:\Git\Filemanager\obj\Debug\C5FileManager.pdb

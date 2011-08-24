@@ -27,6 +27,7 @@
 "new_filename": "Ange nytt namn på filen",
 "successful_rename": "Namnbyte utfört.",
 "rename": "Byt namn",
+"edit": "Edit",
 "confirmation_delete": "Är du säker på att du vill radera filen?",
 "successful_delete": "Radering utförd.",
 "successful_added_file": "En ny fil har lagts till.",
@@ -53,5 +54,6 @@
 "bytes": " bytes",
 "kb": "kb",
 "mb": "mb",
-"gb": "gb"
+"gb": "gb",
+	"edit_image_only": "Je kunt alleen afbeeldingen bewerken"
 }

@@ -27,6 +27,7 @@
 	"new_filename": "Adja meg a fájl új nevét",
 	"successful_rename": "Sikeres átnevezés.",
 	"rename": "Átnevezés",
+	"edit": "Edit",
 	"confirmation_delete": "Biztosan törölni szeretné a kijelölt fájlt?",
 	"successful_delete": "Sikeres törlés.",
 	"successful_added_file": "Az új fájl sikeresen létre lett hozva.",
@@ -52,6 +53,7 @@
 	"bytes": " byte",
 	"kb": "kb",
 	"mb": "mb",
-	"gb": "gb"
+	"gb": "gb",
+	"edit_image_only": "Je kunt alleen afbeeldingen bewerken"
 }
 
