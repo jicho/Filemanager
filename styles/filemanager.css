@@ -73,6 +73,9 @@ body {
 #preview > img {
 	margin: 25px;
 	max-width: 80%;
+    -moz-box-shadow: 0 0 8px #888;
+    -webkit-box-shadow: 0 0 8px #888;
+    box-shadow: 0 0 8px #888;
 }
 
 #fileinfo > h1 {
