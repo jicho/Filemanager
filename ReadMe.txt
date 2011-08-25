@@ -56,6 +56,7 @@ FileManager currently includes connectors for PHP, JSP, lasso, ASP and CFM in th
 	JSP: .../connectors/jsp/filemanager.jsp
 	lasso: .../connectors/lasso/filemanager.lasso
 	ASP: .../connectors/asp/filemanager.asp
+    ASPX: .../connectors/asp/filemanager.aspx
 	CFM: .../connectors/cfm/filemanager.cfm
 
 As long as a script exists at this location to respond to requests, you may split up the code (external libraries, configuration files, etc.) however you see fit.
@@ -253,3 +254,17 @@ The download method serves the requested file to the user. We currently use a MI
 Example Request:
 
 	[path to connector]?mode=download&path=/UserFiles/new%20logo.png
+
+
+quick upload (ASPX)
+--------
+The ASPX connector has support for the "Quick upload" feature of the (F)CK editor. When you want to use it you need to make changes to the (F)CK editor config file
+
+FCK editor setup:
+FCKConfig.LinkUploadURL = FCKConfig.BasePath + "[path to connector]?mode=QuickUpload&version=fck";
+
+CK editor Setup (not tested):
+[CKSomethings.BasePath] + "[path to connector]?mode=QuickUpload&version=ck";
+
+You can disable the "Quick upload" in the FCK editor by disabling it:
+FCKConfig.LinkUpload = false ; // disable de upload tab
