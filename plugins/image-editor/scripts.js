@@ -21,20 +21,21 @@ $.setFormAction = function () {
 };
 
 /**********************************************************
-Form action settings
+Resize input action
 **********************************************************/
-$.resizeInputs = function (pResize, pOrgImgWidth, pOrgImgHeight) {
-    // set current image size
+$.resizeInputs = function (pResize, pOrgImgWidth, pOrgImgHeight, lg) {
+    // set current image size (visible to user)
     $("#changeWidth").val(pOrgImgWidth);
     $("#changeHeight").val(pOrgImgHeight);
 
-    // set dimensions on input
+    // set dimensions on input (not visible to user)
+    // also used by crop logic
     $("input[name='width']").val(pOrgImgWidth);
     $("input[name='height']").val(pOrgImgHeight);
 
     if (pResize) {
         // help text
-        $('#help').html('Set the new dimensions an press "Save".<br />Image quality can change a little compared to the preview!');
+        $('#help').html(lg.help_resize);
 
         // activate resize logic
         $("#changeWidth, #changeHeight").keyup(function () {
@@ -72,13 +73,13 @@ $.resizeInputs = function (pResize, pOrgImgWidth, pOrgImgHeight) {
         });
     } else {
         // used in crop mode
-        
+
         // reset image dimensions
         $("#photo").width(pOrgImgWidth)
                     .height(pOrgImgHeight);
 
         // help text
-        $('#help').html('Make your selection and press "Save".');
+        $('#help').html(lg.help_crop);
 
         // reset hidden (crop) inputs
         $("input[name='width']").val('');

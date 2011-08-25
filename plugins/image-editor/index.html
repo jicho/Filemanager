@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="../../plugins/image-editor/style.css" />
 </head>
 <body>
-
+[crop_title]
 <!-- upload form -->
 <form id="save-image" method="get">
     <input type="hidden" id="path" name="path" value="" />
@@ -19,22 +19,20 @@
     
     <!-- edit options -->
     <div>
-        <label>Options</label>
-        <input type="radio" name="mode" value="crop" id="crop" checked="checked" /> <label for="crop" title="Crop image">Crop</label>
-        <input type="radio" name="mode" value="resize" id="resize" /> <label for="resize" title="Resize image dimensions">Resize</label>
-        <button id="save">Save</button>
+        <label>[options]</label>
+        <input type="radio" name="mode" value="crop" id="crop" checked="checked" /> <label for="crop" title="Crop image">[crop]</label>
+        <input type="radio" name="mode" value="resize" id="resize" /> <label for="resize" title="Resize image dimensions">[resize]</label>
+        <button id="save">[save]</button>
     </div>
 </form>
 
 <!-- resize options -->
 <div id="resize-options">
-    <label>Dimensions</label>
-    <input type="text" id="changeWidth" name="resize-width" /> x <input type="text" id="changeHeight" name="resize-height" /> px
+    <label>[dimensions]</label>
+    <input type="text" id="changeWidth" name="resize-width" /> x <input type="text" id="changeHeight" name="resize-height" /> [pixels]
 </div>
 
-<div id="help">
-    Make your selection and press "Save".
-</div>
+<div id="help">[help_crop]</div>
 
 <!-- photo -->
 <div>
@@ -42,16 +40,50 @@
 </div>
 
 <script type="text/javascript" src="../../scripts/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.ba-replacetext.js"></script>
 <script type="text/javascript" src="../../scripts/jquery.form-2.63.js"></script>
 <script type="text/javascript" src="../../scripts/jquery.impromptu-3.1.min.js"></script>
 <script type="text/javascript" src="../../scripts/jquery.imgareaselect/jquery.imgareaselect.min.js"></script>
-<script type="text/javascript" src="scripts.js"></script>
 <script type="text/javascript" src="../../scripts/filemanager.config.js"></script>
+<script type="text/javascript" src="scripts.js"></script>
 
 <script type="text/javascript">
 (function ($) {
     // Sets image path.
     var imgPath = $.urlParam('path');
+
+    // disable further actions
+    if (window.opener == null) {
+        alert("You're not allowed to access this window directly!");
+        window.close();
+        return;
+    }
+
+    // Get localized messages from file 
+    // through culture var or from URL
+    if ($.urlParam('langCode') != 0 && window.opener.$.file_exists('plugins/image-editor/languages/' + $.urlParam('langCode') + '.js')) {
+        culture = $.urlParam('langCode');
+    } else if (window.opener.$.file_exists('plugins/image-editor/languages/' + culture + '.js')) {
+        // no file found based on default culture setting in filemanager.config.js
+        // lets take the English version
+        culture = "en";
+    };
+
+    var lg = [];
+    $.ajax({
+        url: 'languages/' + culture + '.js',
+        async: false,
+        dataType: 'json',
+        success: function (json) {
+            lg = json;
+        }
+    });
+
+    // Get translation
+    function getTranslation(found) {
+        var search = found.substr(1, found.length - 2);
+        return lg[search] ? lg[search] : found;
+    };
 
     $(document).ready(function () {
         /**********************************************************
@@ -62,12 +94,16 @@
             cache: false
         });
 
+        // place translation using jQuery replaceText
+        // source: http://benalman.com/projects/jquery-replacetext-plugin/
+        $("body *").replaceText(/\[.*?\]/g, getTranslation, true);
+
         // cosmetic tweak for buttons
         $('button').wrapInner('<span></span>');
 
         // disable save button
         $('#save').attr('disabled', true);
-
+        
         // set image source
         $('#photo').attr('src', imgPath);
 
@@ -88,7 +124,7 @@
             originalImageWidth = $("#photo").width(),
             originalImageHeight = $("#photo").height();
         }, 100);
-
+        
         /**********************************************************
         Options
         **********************************************************/
@@ -102,7 +138,7 @@
                 });
 
                 // undo resize settings
-                $.resizeInputs(false, originalImageWidth, originalImageHeight);
+                $.resizeInputs(false, originalImageWidth, originalImageHeight, lg);
 
                 // resize options (hidden)
                 $("#resize-options").slideUp();
@@ -114,7 +150,7 @@
                 });
 
                 // undo resize settings
-                $.resizeInputs(true, originalImageWidth, originalImageHeight);
+                $.resizeInputs(true, originalImageWidth, originalImageHeight, lg);
 
                 // resize options (visible)
                 $("#resize-options").slideDown();
@@ -123,7 +159,6 @@
             // disable save button
             $('#save').attr('disabled', true);
         });
-
 
         /**********************************************************
         Crop "editor"
@@ -141,13 +176,15 @@
             }
         });
 
-        // save crop
+        /**********************************************************
+        Save image
+        **********************************************************/
         $('#save-image').ajaxForm({
             //target: '#uploadresponse',
             beforeSubmit: function (arr, form, options) {
                 // disable button
                 $('#save').attr('disabled', true);
-                $('#save span').addClass("loading").text("Saving image");
+                $('#save span').addClass("loading").text(lg.saving_image);
             },
             success: function (result) {
                 var data = jQuery.parseJSON(result);
@@ -164,7 +201,7 @@
 
                     // activate button
                     $('#save').removeAttr('disabled');
-                    $('#save span').removeClass("loading").text("Save");
+                    $('#save span').removeClass("loading").text(lg.save);
                 }
             }
         });
