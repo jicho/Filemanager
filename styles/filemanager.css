@@ -118,6 +118,10 @@ button {
 	margin-left: 4px;
 	background-image: url(../images/btnOFF.gif);
 	background-repeat: repeat-x;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
 
 button:hover {
