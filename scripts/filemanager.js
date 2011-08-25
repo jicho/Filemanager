@@ -49,7 +49,7 @@
 
         return false;
     };
-    
+
     /*---------------------------------------------------------
     Setup, Layout, and Status Functions
     ---------------------------------------------------------*/
@@ -860,8 +860,14 @@
             var centerHeight = (screen.height - windowHeight) / 2;
 
             // open popup
-            window.open("plugins/image-editor/index.html?path=" + data['Path'] + "&langCode=" + $.urlParam('langCode'),
+            var newWin = window.open("plugins/image-editor/index.html?path=" + data['Path'] + "&langCode=" + $.urlParam('langCode'),
                             "ImageEditor", "resizable=1, scrollbars=1, width=" + windowWidth + ", height=" + windowHeight + ",left=" + centerWidth + "top=" + centerHeight);
+
+            if (!newWin || newWin.closed || typeof newWin.closed == 'undefined' || newWin.location == 'about:blank') {
+                // Popup blocked
+                $.prompt('Your browser is blocking the editor window!');
+            }
+
         } else {
             $.prompt(lg.edit_image_only);
         }
