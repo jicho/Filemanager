@@ -557,7 +557,12 @@
     };
 
     function getContextMenuOptions(elem) {
-        var optionsID = elem.attr('class').replace(/ /g, '_');
+        var optionsID = "";
+        
+        if(elem.attr('class') != undefined) {
+            optionsID = elem.attr('class').replace(/ /g, '_');
+        }
+        
         if (optionsID == "") return 'itemOptions';
         if (!($('#' + optionsID).length)) {
             // Create a clone to itemOptions with menus specific to this element
@@ -891,7 +896,7 @@
             if (showEdit == true) {
                 $('#itemOptions a[href$="#edit"]').append(lg.edit);
             }
-            
+
             $('#itemOptions a[href$="#rename"]').append(lg.rename);
             $('#itemOptions a[href$="#delete"]').append(lg.del);
         }
