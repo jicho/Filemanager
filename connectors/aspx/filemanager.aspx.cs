@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Text;
 using System.IO;
@@ -107,7 +108,8 @@ namespace C5FileManager.connectors.aspx
                     case "delete"           : response = Delete();      break;
                     case "addfolder"        : response = AddFolder();   break;
                     case "quickupload"      : response = QuickUpload(); break;
-                    case "crop"             : response = Crop(); break;
+                    case "crop"             : response = Crop();        break;
+                    case "resize"           : response = Resize();      break;
                     case "download"         : Download();               break;
                     default                 : CreateError("No Mode");   break;
                 }
@@ -943,7 +945,7 @@ namespace C5FileManager.connectors.aspx
 
             if(width == 0 || height == 0)
             {
-                error = "Can't crop image";
+                error = "Can't crop image, dimension problem";
                 code = "-1";
             }else
             {
@@ -982,7 +984,80 @@ namespace C5FileManager.connectors.aspx
                 }
                 else
                 {
-                    error = "can't find image";
+                    error = "Can't find image";
+                    code = "-1";
+                }
+            }
+            string retVal = "{ \"Error\":" + EnquoteJson(error) + "," +
+                " \"Code\":" + code + "," +
+                " \"Path\":" + EnquoteJson(path) +
+                "}";
+
+            return retVal;
+        }
+
+        /// <summary>
+        /// Resize image
+        /// </summary>
+        /// <returns></returns>
+        private string Resize()
+        {
+            if (Request.QueryString["path"] == null)
+            {
+                return "";
+            }
+
+            int width = Int32.Parse(Request.QueryString["width"]);
+            int height = Int32.Parse(Request.QueryString["height"]);
+
+            string path = Request.QueryString["path"];
+            string fullPhysicalPath = Server.MapPath(BaseUrl + path);
+
+            string error = "";
+            string code = "0";
+
+            if (width == 0 || height == 0)
+            {
+                error = "Can't resize image, dimension problem";
+                code = "-1";
+            }
+            else
+            {
+
+                if (File.Exists(fullPhysicalPath))
+                {
+                    // create new file name
+                    FileInfo fi = new FileInfo(fullPhysicalPath);
+                    string fileExt = fi.Extension;
+
+
+                    if (IsImageExtension(fileExt.Replace(".", "")))
+                    {
+                        // resize image
+                        try
+                        {
+                            Image source = new Bitmap(fullPhysicalPath);
+                            Image resizedImage = ResizeImage(source, width, height);
+
+                            resizedImage.Save(GetPathWithoutFilename(fullPhysicalPath, fileExt) + "-resized.jpg",
+                                              ImageFormat.Jpeg);
+
+                        }
+                        catch
+                        {
+                            error = "Can't resize image";
+                            code = "-1";
+                        }
+                    }
+                    else
+                    {
+                        error = "No (supported) image";
+                        code = "-1";
+                    }
+                }
+                else
+                {
+                    error = "Can't find image";
                     code = "-1";
                 }
             }
@@ -1228,15 +1303,42 @@ namespace C5FileManager.connectors.aspx
         /// <returns></returns>
         public Bitmap CropImage(Bitmap source, Rectangle section) {
             // An empty bitmap which will hold the cropped image  
-            Bitmap bmp = new Bitmap(section.Width, section.Height);    
-            Graphics g = Graphics.FromImage(bmp);    
+            Bitmap bmp = new Bitmap(section.Width, section.Height);
+            Graphics graphic = Graphics.FromImage(bmp);
+            graphic.InterpolationMode = InterpolationMode.HighQualityBicubic; 
             
             // Draw the given area (section) of the source image  
             // at location 0,0 on the empty bitmap (bmp)  
-            g.DrawImage(source, 0, 0, section, GraphicsUnit.Pixel);
+            graphic.DrawImage(source, 0, 0, section, GraphicsUnit.Pixel);
             
             return bmp; 
-        } 
+        }
+
+        /// <summary>
+        /// Resize Image to new dimensions
+        /// </summary>
+        /// <param name="img"></param>
+        /// <param name="resizedWidth"></param>
+        /// <param name="resizedHeight"></param>
+        /// <returns></returns>
+        public Image ResizeImage(Image img, int resizedWidth, int resizedHeight)
+        {
+            //create a new Bitmap the size of the new image
+            Bitmap bmp = new Bitmap(resizedWidth, resizedHeight);
+
+            //create a new graphic from the Bitmap
+            Graphics graphic = Graphics.FromImage((Image)bmp);
+            graphic.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+            //draw the newly resized image
+            graphic.DrawImage(img, 0, 0, resizedWidth, resizedHeight);
+
+            //dispose and free up the resources
+            graphic.Dispose();
+
+            //return the image
+            return (Image)bmp;
+        }
 
         public static string GetShortFileName(string fullFileName)
         {

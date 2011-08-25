@@ -1,5 +1,47 @@
-﻿#photo {
+﻿body {
+    font-size: 0.8em;
+}
+
+#photo {
     -moz-box-shadow: 0 0 10px #888;
     -webkit-box-shadow: 0 0 10px #888;
     box-shadow: 0 0 10px #888;
+}
+
+#resize-options {
+    display: none;
+}
+
+label {
+    cursor: pointer;
+}
+
+    div > label:first-child {
+        width: 100px;
+        display: inline-block;
+        font-weight: bold;
+    }
+
+img {
+    -ms-interpolation-mode: bicubic;
+    image-rendering: optimizeQuality;
+    margin-top: 10px;
+}
+
+#changeWidth,
+#changeHeight {
+    border: 1px solid #999;
+    padding: 3px;
+    width: 50px;
+
+    text-align: center;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#save-image,
+#help {
+    padding: 10px 0px;
 }
