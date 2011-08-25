@@ -6,6 +6,8 @@
     -moz-box-shadow: 0 0 10px #888;
     -webkit-box-shadow: 0 0 10px #888;
     box-shadow: 0 0 10px #888;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#888888')";
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#888888');
 }
 
 #resize-options {
