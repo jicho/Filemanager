@@ -518,7 +518,7 @@ namespace C5FileManager.connectors.aspx
 
                 newPath = GetPathWithoutFilename(path, oldName) + newName;
 
-                if (!dir.EndsWith("\\"))
+                if (dir != null && !dir.EndsWith("\\"))
                 {
                     dir += "\\";
                 }
@@ -955,7 +955,7 @@ namespace C5FileManager.connectors.aspx
                     // create new file name
                     FileInfo fi = new FileInfo(fullPhysicalPath);
                     string fileExt = fi.Extension;
-
+                    string fullPhysicalPathCroppedImage = GetPathWithoutFilename(fullPhysicalPath, fileExt) + "-crop.jpg";
 
                     if (IsImageExtension(fileExt.Replace(".", "")))
                     {
@@ -966,8 +966,38 @@ namespace C5FileManager.connectors.aspx
                             Rectangle section = new Rectangle(new Point(x1, y1), new Size(width, height));
                             Bitmap croppedImage = CropImage(source, section);
 
-                            croppedImage.Save(GetPathWithoutFilename(fullPhysicalPath, fileExt) + "-cropped.jpg",
-                                              ImageFormat.Jpeg);
+                            croppedImage.Save(fullPhysicalPathCroppedImage, ImageFormat.Jpeg);
+
+                            // Delete thumb of current image
+                            // only used when you are cropping the same image that was already cropped
+                            try
+                            {
+                                // get cropped image name
+                                string croppedImageName = GetThumbNameFromFullPhysicalPath(fullPhysicalPathCroppedImage);
+
+                                // create full path with thumbnail name of cropped image.
+                                string croppedImageFullPhysicalPath = GetPathWithoutFilename(fullPhysicalPathCroppedImage,
+                                                                                                GetShortFileName(fullPhysicalPathCroppedImage)) + croppedImageName;
+
+                                if (File.Exists(croppedImageFullPhysicalPath))
+                                {
+                                    try
+                                    {
+                                        File.Delete(croppedImageFullPhysicalPath);
+                                    }
+                                    catch
+                                    {
+                                        error = "System can't delete thumbnail... You should not see this warning!";
+                                        code = "-1";
+                                    }
+                                }
+                            }
+                            catch
+                            {
+                                // can't delete original file
+                                error = "Can't delete file";
+                                code = "-1";
+                            }
 
                         }
                         catch
@@ -1138,7 +1168,6 @@ namespace C5FileManager.connectors.aspx
         /// Create error JSON, but shorter
         /// </summary>
         /// <param name="error"></param>
-        /// <param name="code"></param>
         /// <returns></returns>
         private static string CreateError(string error)
         {
@@ -1425,11 +1454,11 @@ namespace C5FileManager.connectors.aspx
         /// <param name="onlyResizeIfWider">Only resize when image is wider</param>
         public void ResizeImage(string originalFile, string newFile, int newWidth, int maxHeight, bool onlyResizeIfWider)
         {
-            System.Drawing.Image fullSizeImage = System.Drawing.Image.FromFile(originalFile);
+            Image fullSizeImage = Image.FromFile(originalFile);
 
             // Prevent using images internal thumbnail
-            fullSizeImage.RotateFlip(System.Drawing.RotateFlipType.Rotate180FlipNone);
-            fullSizeImage.RotateFlip(System.Drawing.RotateFlipType.Rotate180FlipNone);
+            fullSizeImage.RotateFlip(RotateFlipType.Rotate180FlipNone);
+            fullSizeImage.RotateFlip(RotateFlipType.Rotate180FlipNone);
 
             if (onlyResizeIfWider)
             {
@@ -1454,13 +1483,13 @@ namespace C5FileManager.connectors.aspx
                 newHeight = fullSizeImage.Height;
             }
 
-            System.Drawing.Image newImage = fullSizeImage.GetThumbnailImage(newWidth, newHeight, null, IntPtr.Zero);
+            Image newImage = fullSizeImage.GetThumbnailImage(newWidth, newHeight, null, IntPtr.Zero);
 
             // Clear handle to original file so that we can overwrite it if necessary
             fullSizeImage.Dispose();
 
             // Save resized picture
-            newImage.Save(newFile, System.Drawing.Imaging.ImageFormat.Png);
+            newImage.Save(newFile, ImageFormat.Png);
         }
 
         /// <summary>
@@ -1474,7 +1503,7 @@ namespace C5FileManager.connectors.aspx
 
             if (!fileName.EndsWith("\\")) fileName += "\\";
             fileName += sessionId + ".log";
-            System.IO.StreamWriter sw = new System.IO.StreamWriter(fileName, true, System.Text.Encoding.UTF8);
+            StreamWriter sw = new StreamWriter(fileName, true, Encoding.UTF8);
             sw.WriteLine(message);
             sw.Close();
             sw.Dispose();
