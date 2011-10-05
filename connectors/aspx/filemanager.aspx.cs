@@ -164,7 +164,7 @@ namespace C5FileManager.connectors.aspx
 
             // What do do when the file exists on disk? 
             // Options are: rename / replace
-            ExistingFileOption = "replace";
+            ExistingFileOption = "rename";
         }
 
         private string GetInfo(string path, string fullPhysicalPath)
@@ -1418,11 +1418,8 @@ namespace C5FileManager.connectors.aspx
         /// <summary>
         /// Created a Unique filename for the given filename
         /// </summary>
-        /// <remarks>
-        /// Source: http://stackoverflow.com/questions/1078003/c-how-would-you-make-a-unique-filename-by-adding-a-number/1078967#1078967
-        /// </remarks>
         /// <param name="filename">A full filename, e.g., c:\temp\myfile.tmp</param>
-        /// <returns>A filename like c:\temp\myfile-old-01-01-2011-01-01-30.tmp</returns>
+        /// <returns>A filename like c:\temp\myfile-1.tmp</returns>
         public string CreateUniqueFilename(string filename)
         {
             string basename = Path.Combine(
@@ -1430,13 +1427,25 @@ namespace C5FileManager.connectors.aspx
                                             Path.GetFileNameWithoutExtension(filename)
                                            );
 
-            string uniquefilename = string.Format("{0}-old-{1}{2}", 
-                                                    basename, 
-                                                    String.Format("{0:dd-MM-yyyy-HH-mm-ss}", DateTime.Now),
-                                                    Path.GetExtension(filename)
-                                                );
-            
-            return uniquefilename;
+            // look for file name and create a unique one
+            for (int i = 1; ; i++)
+            {
+                string filePath = basename + "-" + i + Path.GetExtension(filename);
+
+                if (!File.Exists(filePath))
+                {
+
+                    try
+                    {
+                        return filePath;
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
+                }
+
+            }
         }
 
         /// <summary>
