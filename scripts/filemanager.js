@@ -780,7 +780,13 @@
             }
 
             // Add the new markup to the DOM.
-            $('#fileinfo').html(result);
+            if (data.length > 0) {
+                // files and / or directories found
+                $('#fileinfo').html(result);
+            }else {
+                // nothing found
+                $('#fileinfo').html('<p class="nothing">' + lg.no_files_found + '</p>');
+            }
 
             // Bind click events to create detail views and add
             // contextual menu options.
