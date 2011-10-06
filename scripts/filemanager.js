@@ -170,14 +170,20 @@
     // Test if Data structure has the 'cap' capability
     // 'cap' is one of 'select', 'rename', 'delete', 'download', 'edit'
     function has_capability(data, cap) {
+        // hide download and edit button in contextual menu on directory
         if (data['File Type'] == 'dir' && (cap == 'download' || cap == 'edit')) {
             return false;
         }
 
+        // hide edit button in contextual menu when clicking on non-images
+        if (jQuery.inArray(data['File Type'], imagesExt) && cap == 'edit') {
+            return false;
+        }
+
+        // other situations
         if (typeof (data['Capabilities']) == "undefined") {
             return true;
-        }
-        else {
+        } else {
             return $.inArray(cap, data['Capabilities']) > -1;
         }
     }
@@ -1012,12 +1018,12 @@
             after: function (data) {
                 $('#filetree').find('li a').each(function () {
                     $(this).contextMenu(
-					{ menu: getContextMenuOptions($(this)) },
-					function (action, el, pos) {
-					    var path = $(el).attr('rel');
-					    setMenus(action, path);
-					}
-				)
+                        { menu: getContextMenuOptions($(this)) },
+                        function (action, el, pos) {
+                            var path = $(el).attr('rel');
+                            setMenus(action, path);
+                        }
+				    );
                 });
             }
         }, function (file) {
