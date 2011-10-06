@@ -871,19 +871,13 @@
 
     // open image edit window
     var editImage = function (data) {
-        var isImage = false,
-            windowWidth = 800,
+        var windowWidth = 800,
             windowHeight = 600;
 
-        // check: extension = image
+        // check: file extension = image
         var newfileSplitted = data['Path'].toLowerCase().split('.');
-        for (key in imagesExt) {
-            if (imagesExt[key] == newfileSplitted[newfileSplitted.length - 1]) {
-                isImage = true;
-            }
-        }
 
-        if (isImage) {
+        if (jQuery.inArray(newfileSplitted[newfileSplitted.length - 1], imagesExt) > 0) {
             var centerWidth = (screen.width - windowWidth) / 2;
             var centerHeight = (screen.height - windowHeight) / 2;
 
@@ -984,13 +978,14 @@
                 $('#upload').attr('disabled', true);
                 $('#upload span').addClass('loading').text(lg.loading_data);
                 if ($.urlParam('type').toString().toLowerCase() == 'images') {
+                    
                     // Test if uploaded file extension is in valid image extensions
                     var newfileSplitted = $('#newfile', form).val().toLowerCase().split('.');
-                    for (key in imagesExt) {
-                        if (imagesExt[key] == newfileSplitted[newfileSplitted.length - 1]) {
-                            return true;
-                        }
+                    
+                    if (jQuery.inArray(newfileSplitted[newfileSplitted.length - 1], imagesExt) > 0) {
+                        return true;
                     }
+                    
                     $.prompt(lg.UPLOAD_IMAGES_ONLY, { timeout: 2000 });
                     return false;
                 }
