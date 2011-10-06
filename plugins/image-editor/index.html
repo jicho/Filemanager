@@ -22,6 +22,7 @@
         <label>[options]</label>
         <input type="radio" name="mode" value="crop" id="crop" checked="checked" /> <label for="crop" title="Crop image">[crop]</label>
         <input type="radio" name="mode" value="resize" id="resize" /> <label for="resize" title="Resize image dimensions">[resize]</label>
+        <input type="radio" name="mode" value="flip-horizontal" id="flip-horizontal" /> <label for="flip-horizontal" title="Flip image horizontal">[flip-horizontal]</label>
         <button id="save">[save]</button>
     </div>
 </form>
@@ -134,6 +135,13 @@
         $("input:radio[name=mode]").click(function () {
             var mode = $(this).val();
 
+            // Reset settings
+            $("#resize-options").slideUp();
+            $('#photo').removeClass('flip-horizontal');
+            
+            // disable save button
+            $('#save').attr('disabled', true);
+            
             if (mode == "crop") {
                 // activate image crop
                 $('img#photo').imgAreaSelect({
@@ -143,8 +151,21 @@
                 // undo resize settings
                 $.resizeInputs(false, originalImageWidth, originalImageHeight, lg);
 
-                // resize options (hidden)
-                $("#resize-options").slideUp();
+            } else if (mode == "flip-horizontal") {
+                // activate image resize
+                $('img#photo').imgAreaSelect({
+                    disable: true,
+                    hide: true
+                });
+
+                $('#photo').addClass('flip-horizontal');
+
+                // undo resize settings
+                $.resizeInputs(true, originalImageWidth, originalImageHeight, lg);
+
+                // disable save button
+                $('#save').attr('disabled', false);
+
             } else {
                 // activate image resize
                 $('img#photo').imgAreaSelect({
@@ -158,9 +179,6 @@
                 // resize options (visible)
                 $("#resize-options").slideDown();
             }
-
-            // disable save button
-            $('#save').attr('disabled', true);
         });
 
         /**********************************************************
@@ -194,7 +212,7 @@
 
                 if (data['Code'] == 0) {
                     // refresh opener window
-                    
+
                     // old (does not update the tree)
                     //window.opener.$.getFolderInfo(data['Path'].substr(0, data['Path'].lastIndexOf('/') + 1));
 

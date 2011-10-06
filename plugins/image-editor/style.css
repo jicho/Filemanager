@@ -30,6 +30,16 @@ img {
     margin-top: 10px;
 }
 
+    img.flip-horizontal {
+        -moz-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: fliph; /*IE*/
+        filter: progid:DXImageTransform.Microsoft.BasicImage(mirror=1)
+                progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#888888') !important;
+    }
+
 #changeWidth,
 #changeHeight {
     border: 1px solid #999;

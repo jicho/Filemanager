@@ -102,16 +102,17 @@ namespace C5FileManager.connectors.aspx
                 mode = Request.QueryString["mode"];
                 switch (mode.ToLowerInvariant())
                 {
-                    case "getinfo"          : response = GetInfo();     break;
-                    case "getfolder"        : response = GetFolder();   break;
-                    case "rename"           : response = Rename();      break;
-                    case "delete"           : response = Delete();      break;
-                    case "addfolder"        : response = AddFolder();   break;
-                    case "quickupload"      : response = QuickUpload(); break;
-                    case "crop"             : response = Crop();        break;
-                    case "resize"           : response = Resize();      break;
-                    case "download"         : Download();               break;
-                    default                 : CreateError("No Mode");   break;
+                    case "getinfo"          : response = GetInfo();         break;
+                    case "getfolder"        : response = GetFolder();       break;
+                    case "rename"           : response = Rename();          break;
+                    case "delete"           : response = Delete();          break;
+                    case "addfolder"        : response = AddFolder();       break;
+                    case "quickupload"      : response = QuickUpload();     break;
+                    case "crop"             : response = Crop();            break;
+                    case "resize"           : response = Resize();          break;
+                    case "flip-horizontal"  : response = FlipHorizontal();  break;
+                    case "download"         : Download();                   break;
+                    default                 : CreateError("No Mode");       break;
                 }
             }
             else if (Request.Form["mode"] != null)
@@ -1076,6 +1077,75 @@ namespace C5FileManager.connectors.aspx
         }
 
         /// <summary>
+        /// Flip image horizontal
+        /// </summary>
+        /// <returns></returns>
+        private string FlipHorizontal()
+        {
+            if (Request.QueryString["path"] == null)
+            {
+                return "";
+            }
+
+            string path = Request.QueryString["path"];
+            string fullPhysicalPath = Server.MapPath(BaseUrl + path);
+            string fullPhysicalPathFlippedImage = null;
+
+            string error = "";
+            string code = "0";
+
+
+            if (File.Exists(fullPhysicalPath))
+            {
+                // create new file name
+                FileInfo fi = new FileInfo(fullPhysicalPath);
+                string fileExt = fi.Extension;
+
+                fullPhysicalPathFlippedImage = RemoveFromEndOfString(CreateUniqueFilename(fullPhysicalPath, "flipped"), fileExt) + ".jpg";
+
+                if (IsImageExtension(fileExt.Replace(".", "")))
+                {
+                    
+                    // flip image
+                    try
+                    {
+                        //Image source = new Bitmap(fullPhysicalPath);
+                        Image source = Image.FromFile(fullPhysicalPath);
+                        Image flippedImage = FlipImage(source, true, false);
+
+                        //flippedImage.Dispose();
+
+                        flippedImage.Save(fullPhysicalPathFlippedImage, ImageFormat.Jpeg);
+
+                    }
+                    catch
+                    {
+                        error = "Can't flip image";
+                        code = "-1";
+                    }
+                }
+                else
+                {
+                    error = "No (supported) image";
+                    code = "-1";
+                }
+            }
+            else
+            {
+                error = "Can't find image";
+                code = "-1";
+            }
+
+            string retVal = "{ \"Error\":" + EnquoteJson(error) + "," +
+                " \"Code\":" + code + "," +
+                " \"Path\":" + EnquoteJson(path) + "," +
+                " \"Name\":" + EnquoteJson(GetShortFileName(fullPhysicalPathFlippedImage)) +
+                "}";
+
+            return retVal;
+        }
+
+        /// <summary>
         /// Download file
         /// </summary>
         private void Download()
@@ -1343,6 +1413,43 @@ namespace C5FileManager.connectors.aspx
 
             //return the image
             return (Image)bmp;
+        }
+
+
+        // source: http://www.vcskicks.com/image-flip.php
+        public static Image FlipImage(Image image, bool flipHorizontally, bool flipVertically)
+        {
+            Bitmap flippedImage = new Bitmap(image.Width, image.Height);
+
+            using (Graphics g = Graphics.FromImage(flippedImage))
+            {
+                //Matrix transformation
+                Matrix m = null;
+                if (flipVertically && flipHorizontally)
+                {
+                    m = new Matrix(-1, 0, 0, -1, 0, 0);
+                    m.Translate(flippedImage.Width, flippedImage.Height, MatrixOrder.Append);
+                }
+                else if (flipVertically)
+                {
+                    m = new Matrix(1, 0, 0, -1, 0, 0);
+                    m.Translate(0, flippedImage.Height, MatrixOrder.Append);
+                }
+                else if (flipHorizontally)
+                {
+                    m = new Matrix(-1, 0, 0, 1, 0, 0);
+                    m.Translate(flippedImage.Width, 0, MatrixOrder.Append);
+                }
+
+                //Draw
+                g.Transform = m;
+                g.DrawImage(image, 0, 0);
+
+                //clean up
+                m.Dispose();
+            }
+
+            return (Image)flippedImage;
         }
 
         public static string GetShortFileName(string fullFileName)

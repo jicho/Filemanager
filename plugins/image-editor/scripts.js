@@ -33,10 +33,20 @@ $.resizeInputs = function (pResize, pOrgImgWidth, pOrgImgHeight, lg) {
     $("input[name='width']").val(pOrgImgWidth);
     $("input[name='height']").val(pOrgImgHeight);
 
-    if (pResize) {
-        // help text
-        $('#help').html(lg.help_resize);
+    // Set help text
+    switch ($("input:radio[name=mode]:checked").val()) {
+        case 'resize':
+            $('#help').html(lg.help_resize); 
+            break;
+        case 'flip-horizontal':
+            $('#help').html(lg.help_flip_horizontal); 
+            break;
+        default:
+            $('#help').html(lg.help_crop); 
+            break;
+    }
 
+    if (pResize) {
         // activate resize logic
         $("#changeWidth, #changeHeight").keyup(function () {
             var changed = $(this).attr("name"),
@@ -72,14 +82,11 @@ $.resizeInputs = function (pResize, pOrgImgWidth, pOrgImgHeight, lg) {
             $('#save').attr('disabled', false);
         });
     } else {
-        // used in crop mode
+        // used in crop /flip mode
 
         // reset image dimensions
         $("#photo").width(pOrgImgWidth)
                     .height(pOrgImgHeight);
-
-        // help text
-        $('#help').html(lg.help_crop);
 
         // reset hidden (crop) inputs
         $("input[name='width']").val('');
