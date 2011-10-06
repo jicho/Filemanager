@@ -245,7 +245,9 @@
         } else {
             $('#fileinfo').find('button#rename').click(function () {
                 var newName = renameItem(data);
-                if (newName.length) $('#fileinfo > h1').text(newName);
+                if (newName.length) {
+                    $('#fileinfo > h1').text(newName);
+                }
             }).show();
         }
 
@@ -253,7 +255,9 @@
             $('#fileinfo').find('button#delete').hide();
         } else {
             $('#fileinfo').find('button#delete').click(function () {
-                if (deleteItem(data)) $('#fileinfo').html('<h1>' + lg.select_from_left + '</h1>');
+                if (deleteItem(data)) {
+                    $('#fileinfo').html('<h1>' + lg.select_from_left + '</h1>');
+                }
             }).show();
         }
 
@@ -272,7 +276,6 @@
             $('#fileinfo').find('button#edit').click(function () {
                 editImage(data);
             }).show();
-
         }
     };
 
@@ -456,13 +459,16 @@
 
     // Adds a new node as the first item beneath the specified
     // parent node. Called after a successful file upload.
-    var addNode = function (path, name) {
+    $.addNode = function(path, name) {
         var ext = name.substr(name.lastIndexOf('.') + 1);
         var thisNode = $('#filetree').find('a[rel="' + path + '"]');
         var parentNode = thisNode.parent();
         var newNode = '<li class="file ext_' + ext + '"><a rel="' + path + name + '" href="#">' + name + '</a></li>';
 
-        if (!parentNode.find('ul').size()) parentNode.append('<ul></ul>');
+        if (!parentNode.find('ul').size()) {
+            parentNode.append('<ul></ul>');
+        }
+
         parentNode.find('ul').prepend(newNode);
         thisNode.click().click();
 
@@ -633,7 +639,9 @@
         template += '</form>';
 
         $('#fileinfo').html(template);
-        $('#parentfolder').click(function () { $.getFolderInfo(currentpath); });
+        $('#parentfolder').click(function () {
+            $.getFolderInfo(currentpath);
+        });
 
         // Retrieve the data & populate the template.
         var d = new Date(); // to prevent IE cache issues
@@ -859,11 +867,17 @@
             var centerWidth = (screen.width - windowWidth) / 2;
             var centerHeight = (screen.height - windowHeight) / 2;
 
+            // add chrome check to $.browser
+            $.browser.chrome = /chrome/.test(navigator.userAgent.toLowerCase());
+
             // open popup
             var newWin = window.open("plugins/image-editor/index.html?path=" + data['Path'] + "&langCode=" + $.urlParam('langCode'),
                             "ImageEditor", "resizable=1, scrollbars=1, width=" + windowWidth + ", height=" + windowHeight + ",left=" + centerWidth + "top=" + centerHeight);
 
-            if (!newWin || newWin.closed || typeof newWin.closed == 'undefined' || newWin.location == 'about:blank') {
+            // popup block detection
+            // removed: newWin.location == 'about:blank' because it fires in FF when the popup isn't blocked...
+            // this also detected the Chrome popup blocker.
+            if (!newWin || newWin.closed || typeof newWin.closed == 'undefined') {
                 // Popup blocked
                 $.prompt('Your browser is blocking the editor window!');
             }
@@ -965,7 +979,7 @@
                 var data = jQuery.parseJSON($('#uploadresponse').find('textarea').text());
 
                 if (data['Code'] == 0) {
-                    addNode(data['Path'], data['Name']);
+                    $.addNode(data['Path'], data['Name']);
                 } else {
                     $.prompt(data['Error']);
                 }

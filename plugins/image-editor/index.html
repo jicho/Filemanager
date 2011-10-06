@@ -106,7 +106,7 @@
 
         // disable save button
         $('#save').attr('disabled', true);
-        
+
         // set image source
         $('#photo').attr('src', imgPath);
 
@@ -127,7 +127,7 @@
             originalImageWidth = $("#photo").width(),
             originalImageHeight = $("#photo").height();
         }, 100);
-        
+
         /**********************************************************
         Options
         **********************************************************/
@@ -194,7 +194,12 @@
 
                 if (data['Code'] == 0) {
                     // refresh opener window
-                    window.opener.$.getFolderInfo(data['Path'].substr(0, data['Path'].lastIndexOf('/') + 1));
+                    
+                    // old (does not update the tree)
+                    //window.opener.$.getFolderInfo(data['Path'].substr(0, data['Path'].lastIndexOf('/') + 1));
+
+                    // new
+                    window.opener.$.addNode(data['Path'].substr(0, data['Path'].lastIndexOf('/') + 1), data['Name']);
 
                     // close popup
                     window.close();

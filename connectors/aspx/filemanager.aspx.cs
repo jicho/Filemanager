@@ -211,7 +211,7 @@ namespace C5FileManager.connectors.aspx
                         int tempHeight = 0;
                         int tempWidth = 0;
 
-                        GetImageDimensions(GetPathWithoutFilename(fullPhysicalPath, GetShortFileName(fullPhysicalPath)) + GetThumbNameFromFullPhysicalPath(fullPhysicalPath), out tempHeight, out tempWidth);
+                        GetImageDimensions(RemoveFromEndOfString(fullPhysicalPath, GetShortFileName(fullPhysicalPath)) + GetThumbNameFromFullPhysicalPath(fullPhysicalPath), out tempHeight, out tempWidth);
                         height = tempHeight.ToString();
                         width = tempWidth.ToString();
                     }else
@@ -304,8 +304,8 @@ namespace C5FileManager.connectors.aspx
             string thumbFileName = GetThumbNameFromFullPhysicalPath(originalFullPhysicalPath);
 
             // location of thumbnail
-            string newFullPhysicalPath = GetPathWithoutFilename(originalFullPhysicalPath, originalFileName) + thumbFileName;
-            string newPath = GetPathWithoutFilename(originalPath, originalFileName) + thumbFileName;
+            string newFullPhysicalPath = RemoveFromEndOfString(originalFullPhysicalPath, originalFileName) + thumbFileName;
+            string newPath = RemoveFromEndOfString(originalPath, originalFileName) + thumbFileName;
 
             if (!File.Exists(newFullPhysicalPath))
             {
@@ -516,7 +516,7 @@ namespace C5FileManager.connectors.aspx
                     path = path.TrimEnd('/');
                 }
 
-                newPath = GetPathWithoutFilename(path, oldName) + newName;
+                newPath = RemoveFromEndOfString(path, oldName) + newName;
 
                 if (dir != null && !dir.EndsWith("\\"))
                 {
@@ -538,8 +538,8 @@ namespace C5FileManager.connectors.aspx
                     // create thumbnail filename
                     string thumbOldFileName = GetThumbNameFromFullPhysicalPath(fullPhysicalPath);
                     string thumbNewFileName = "thumb_" + newName.Substring(0, newName.Length - GetFileExtension(newName).Length) + "png";
-                    string oldThumbFullPhysicalPath = GetPathWithoutFilename(fullPhysicalPath, oldName) + thumbOldFileName;
-                    string newThumbFullPhysicalPath = GetPathWithoutFilename(fullPhysicalPath, oldName) + thumbNewFileName;
+                    string oldThumbFullPhysicalPath = RemoveFromEndOfString(fullPhysicalPath, oldName) + thumbOldFileName;
+                    string newThumbFullPhysicalPath = RemoveFromEndOfString(fullPhysicalPath, oldName) + thumbNewFileName;
 
                     if (File.Exists(oldThumbFullPhysicalPath))
                     {
@@ -560,7 +560,7 @@ namespace C5FileManager.connectors.aspx
                     path = path.TrimEnd('/');
                 }
 
-                newPath = GetPathWithoutFilename(path, oldName) + newName;
+                newPath = RemoveFromEndOfString(path, oldName) + newName;
 
                 if (!dir.EndsWith("\\")) dir += "\\";
                 string fullPhysicalNewPath = dir + newName;
@@ -618,7 +618,7 @@ namespace C5FileManager.connectors.aspx
                     File.Delete(fullPhysicalPath);
                     
                     // delete thumbnail
-                    string thumbFullPhysicalPath = GetPathWithoutFilename(fullPhysicalPath, fileName) + GetThumbNameFromFullPhysicalPath(fullPhysicalPath);
+                    string thumbFullPhysicalPath = RemoveFromEndOfString(fullPhysicalPath, fileName) + GetThumbNameFromFullPhysicalPath(fullPhysicalPath);
 
                     if (File.Exists(thumbFullPhysicalPath))
                     {
@@ -693,7 +693,7 @@ namespace C5FileManager.connectors.aspx
                     if(IsAllowedExtension(ext))
                     {
 
-                        char[] invalidFileChars = System.IO.Path.GetInvalidFileNameChars();
+                        char[] invalidFileChars = Path.GetInvalidFileNameChars();
 
                         foreach (char c in invalidFileChars)
                         {
@@ -939,6 +939,7 @@ namespace C5FileManager.connectors.aspx
 
             string path = Request.QueryString["path"];
             string fullPhysicalPath = Server.MapPath(BaseUrl + path);
+            string fullPhysicalPathCroppedImage = null;
 
             string error = "";
             string code = "0";
@@ -955,7 +956,8 @@ namespace C5FileManager.connectors.aspx
                     // create new file name
                     FileInfo fi = new FileInfo(fullPhysicalPath);
                     string fileExt = fi.Extension;
-                    string fullPhysicalPathCroppedImage = CreateUniqueFilename(fullPhysicalPath, "crop");
+
+                    fullPhysicalPathCroppedImage = RemoveFromEndOfString(CreateUniqueFilename(fullPhysicalPath, "crop"), fileExt) + ".jpg";
 
                     if (IsImageExtension(fileExt.Replace(".", "")))
                     {
@@ -987,9 +989,11 @@ namespace C5FileManager.connectors.aspx
                     code = "-1";
                 }
             }
+
             string retVal = "{ \"Error\":" + EnquoteJson(error) + "," +
                 " \"Code\":" + code + "," +
-                " \"Path\":" + EnquoteJson(path) +
+                " \"Path\":" + EnquoteJson(path) + "," +
+                " \"Name\":" + EnquoteJson(GetShortFileName(fullPhysicalPathCroppedImage)) +
                 "}";
 
             return retVal;
@@ -1011,6 +1015,7 @@ namespace C5FileManager.connectors.aspx
 
             string path = Request.QueryString["path"];
             string fullPhysicalPath = Server.MapPath(BaseUrl + path);
+            string fullPhysicalPathResizedImage = null;
 
             string error = "";
             string code = "0";
@@ -1028,7 +1033,8 @@ namespace C5FileManager.connectors.aspx
                     // create new file name
                     FileInfo fi = new FileInfo(fullPhysicalPath);
                     string fileExt = fi.Extension;
-                    string fullPhysicalPathResizedImage = CreateUniqueFilename(fullPhysicalPath, "resize");
+
+                    fullPhysicalPathResizedImage = RemoveFromEndOfString(CreateUniqueFilename(fullPhysicalPath, "resize"), fileExt) + ".jpg";
 
                     if (IsImageExtension(fileExt.Replace(".", "")))
                     {
@@ -1059,9 +1065,11 @@ namespace C5FileManager.connectors.aspx
                     code = "-1";
                 }
             }
+
             string retVal = "{ \"Error\":" + EnquoteJson(error) + "," +
                 " \"Code\":" + code + "," +
-                " \"Path\":" + EnquoteJson(path) +
+                " \"Path\":" + EnquoteJson(path) + "," +
+                " \"Name\":" + EnquoteJson(GetShortFileName(fullPhysicalPathResizedImage)) +
                 "}";
 
             return retVal;
@@ -1367,7 +1375,10 @@ namespace C5FileManager.connectors.aspx
         public static string GetFileExtension(string fileName)
         {
             int lastPlace = fileName.LastIndexOf('.');
-            if (lastPlace < 0 || lastPlace == fileName.Length - 1) return "";
+            if (lastPlace < 0 || lastPlace == fileName.Length - 1)
+            {
+                return "";
+            }
 
             return fileName.Substring(lastPlace + 1);
         }
@@ -1375,12 +1386,12 @@ namespace C5FileManager.connectors.aspx
         /// <summary>
         /// Remove the file name from the path
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="filename"></param>
+        /// <param name="source"></param>
+        /// <param name="remove">Remove this from the end of the string</param>
         /// <returns></returns>
-        public static string GetPathWithoutFilename(string path, string filename)
+        public static string RemoveFromEndOfString(string source, string remove)
         {
-            return path.Substring(0, path.Length - filename.Length);
+            return source.Substring(0, source.Length - remove.Length);
         }
 
         /// <summary>
