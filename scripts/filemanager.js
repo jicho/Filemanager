@@ -170,9 +170,16 @@
     // Test if Data structure has the 'cap' capability
     // 'cap' is one of 'select', 'rename', 'delete', 'download', 'edit'
     function has_capability(data, cap) {
-        if (data['File Type'] == 'dir' && cap == 'download') return false;
-        if (typeof (data['Capabilities']) == "undefined") return true;
-        else return $.inArray(cap, data['Capabilities']) > -1;
+        if (data['File Type'] == 'dir' && (cap == 'download' || cap == 'edit')) {
+            return false;
+        }
+
+        if (typeof (data['Capabilities']) == "undefined") {
+            return true;
+        }
+        else {
+            return $.inArray(cap, data['Capabilities']) > -1;
+        }
     }
 
     // from http://phpjs.org/functions/basename:360
@@ -213,7 +220,7 @@
                         }
                     });
                 } else {
-                    $.prompt(lg.no_foldername, {timeout: 1000});
+                    $.prompt(lg.no_foldername, { timeout: 1000 });
                 }
             };
             var btns = {};
@@ -469,7 +476,7 @@
         if (!parentNode.find('ul').size()) {
             // create unordered list (when there is no parent 'ul');
             parentNode.append('<ul></ul>');
-            
+
             // add entry to list
             $('#filetree ul').prepend(newNode);
         }
