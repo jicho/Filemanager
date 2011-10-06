@@ -209,11 +209,11 @@
                             addFolder(result['Parent'], result['Name']);
                             $.getFolderInfo(result['Parent']);
                         } else {
-                            $.prompt(result['Error']);
+                            $.prompt(result['Error'], { timeout: 2000 });
                         }
                     });
                 } else {
-                    $.prompt(lg.no_foldername);
+                    $.prompt(lg.no_foldername, {timeout: 1000});
                 }
             };
             var btns = {};
@@ -342,7 +342,7 @@
 
             window.close();
         } else {
-            $.prompt(lg.fck_select_integration);
+            $.prompt(lg.fck_select_integration, { timeout: 2000 });
         }
     };
 
@@ -389,9 +389,9 @@
                                 $('#fileinfo td[title="' + oldPath + '"]').attr('title', newPath);
                             }
 
-                            $.prompt(lg.successful_rename);
+                            $.prompt(lg.successful_rename, { timeout: 2000 });
                         } else {
-                            $.prompt(result['Error']);
+                            $.prompt(result['Error'], { timeout: 2000 });
                         }
 
                         finalName = result['New Name'];
@@ -433,10 +433,10 @@
                         rootpath = rootpath.substr(0, rootpath.lastIndexOf('/') + 1);
                         $('#uploader h1').text(lg.current_folder + displayPath(rootpath));
                         isDeleted = true;
-                        $.prompt(lg.successful_delete);
+                        $.prompt(lg.successful_delete, { timeout: 2000 });
                     } else {
                         isDeleted = false;
-                        $.prompt(result['Error']);
+                        $.prompt(result['Error'], { timeout: 2000 });
                     }
                 }
             });
@@ -479,7 +479,7 @@
 
         $.getFolderInfo(path);
 
-        $.prompt(lg.successful_added_file);
+        $.prompt(lg.successful_added_file, { timeout: 2000 });
     };
 
     // Updates the specified node with a new name. Called after
@@ -546,7 +546,7 @@
 			);
         }
 
-        $.prompt(lg.successful_added_folder);
+        $.prompt(lg.successful_added_folder, { timeout: 2000 });
     };
 
 
@@ -666,7 +666,7 @@
                 // Bind toolbar functions.
                 bindToolbar(data);
             } else {
-                $.prompt(data['Error']);
+                $.prompt(data['Error'], { timeout: 2000 });
             }
         });
     };
@@ -884,11 +884,11 @@
             // this also detected the Chrome popup blocker.
             if (!newWin || newWin.closed || typeof newWin.closed == 'undefined') {
                 // Popup blocked
-                $.prompt('Your browser is blocking the editor window!');
+                $.prompt('Your browser is blocking the editor window!', { timeout: 2000 });
             }
 
         } else {
-            $.prompt(lg.edit_image_only);
+            $.prompt(lg.edit_image_only, { timeout: 2000 });
         }
     };
 
@@ -976,7 +976,7 @@
                             return true;
                         }
                     }
-                    $.prompt(lg.UPLOAD_IMAGES_ONLY);
+                    $.prompt(lg.UPLOAD_IMAGES_ONLY, { timeout: 2000 });
                     return false;
                 }
             },
@@ -986,7 +986,7 @@
                 if (data['Code'] == 0) {
                     $.addNode(data['Path'], data['Name']);
                 } else {
-                    $.prompt(data['Error']);
+                    $.prompt(data['Error'], { timeout: 2000 });
                 }
                 $('#upload').removeAttr('disabled');
                 $('#upload span').removeClass('loading').text(lg.upload);

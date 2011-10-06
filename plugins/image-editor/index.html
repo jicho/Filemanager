@@ -205,7 +205,7 @@
                     window.close();
                 } else {
                     // display error
-                    $.prompt(data['Error']);
+                    $.prompt(data['Error'], { timeout: 2000 });
 
                     // activate button
                     $('#save').removeAttr('disabled');
