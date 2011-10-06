@@ -6,7 +6,7 @@
 // A Beautiful Site (http://abeautifulsite.net/)
 // 24 March 2008
 //
-// Visit http://abeautifulsite.net/notebook.php?article=58 for more information
+// Visit http://abeautifulsite.net/blog/2008/03/jquery-file-tree/ for more information
 //
 // Usage: $('.fileTreeDemo').fileTree( options, callback )
 //
