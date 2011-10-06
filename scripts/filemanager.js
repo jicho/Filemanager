@@ -459,14 +459,19 @@
 
     // Adds a new node as the first item beneath the specified
     // parent node. Called after a successful file upload.
-    $.addNode = function(path, name) {
+    $.addNode = function (path, name) {
         var ext = name.substr(name.lastIndexOf('.') + 1);
         var thisNode = $('#filetree').find('a[rel="' + path + '"]');
         var parentNode = thisNode.parent();
         var newNode = '<li class="file ext_' + ext + '"><a rel="' + path + name + '" href="#">' + name + '</a></li>';
 
+        // no list found
         if (!parentNode.find('ul').size()) {
+            // create unordered list (when there is no parent 'ul');
             parentNode.append('<ul></ul>');
+            
+            // add entry to list
+            $('#filetree ul').prepend(newNode);
         }
 
         parentNode.find('ul').prepend(newNode);
