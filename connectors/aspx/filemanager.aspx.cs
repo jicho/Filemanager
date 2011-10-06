@@ -718,7 +718,7 @@ namespace C5FileManager.connectors.aspx
                             {
                                 // rename current filename
                                 // and place the uploaded file on its place
-                                File.Move(fullPhysicalPath, CreateUniqueFilename(fullPhysicalPath));
+                                File.Move(fullPhysicalPath, CreateUniqueFilename(fullPhysicalPath, null));
                             }
                         }
 
@@ -955,7 +955,7 @@ namespace C5FileManager.connectors.aspx
                     // create new file name
                     FileInfo fi = new FileInfo(fullPhysicalPath);
                     string fileExt = fi.Extension;
-                    string fullPhysicalPathCroppedImage = GetPathWithoutFilename(fullPhysicalPath, fileExt) + "-crop.jpg";
+                    string fullPhysicalPathCroppedImage = CreateUniqueFilename(fullPhysicalPath, "crop");
 
                     if (IsImageExtension(fileExt.Replace(".", "")))
                     {
@@ -967,37 +967,6 @@ namespace C5FileManager.connectors.aspx
                             Bitmap croppedImage = CropImage(source, section);
 
                             croppedImage.Save(fullPhysicalPathCroppedImage, ImageFormat.Jpeg);
-
-                            // Delete thumb of current image
-                            // only used when you are cropping the same image that was already cropped
-                            try
-                            {
-                                // get cropped image name
-                                string croppedImageName = GetThumbNameFromFullPhysicalPath(fullPhysicalPathCroppedImage);
-
-                                // create full path with thumbnail name of cropped image.
-                                string croppedImageFullPhysicalPath = GetPathWithoutFilename(fullPhysicalPathCroppedImage,
-                                                                                                GetShortFileName(fullPhysicalPathCroppedImage)) + croppedImageName;
-
-                                if (File.Exists(croppedImageFullPhysicalPath))
-                                {
-                                    try
-                                    {
-                                        File.Delete(croppedImageFullPhysicalPath);
-                                    }
-                                    catch
-                                    {
-                                        error = "System can't delete thumbnail... You should not see this warning!";
-                                        code = "-1";
-                                    }
-                                }
-                            }
-                            catch
-                            {
-                                // can't delete original file
-                                error = "Can't delete file";
-                                code = "-1";
-                            }
 
                         }
                         catch
@@ -1059,7 +1028,7 @@ namespace C5FileManager.connectors.aspx
                     // create new file name
                     FileInfo fi = new FileInfo(fullPhysicalPath);
                     string fileExt = fi.Extension;
-
+                    string fullPhysicalPathResizedImage = CreateUniqueFilename(fullPhysicalPath, "resize");
 
                     if (IsImageExtension(fileExt.Replace(".", "")))
                     {
@@ -1069,8 +1038,7 @@ namespace C5FileManager.connectors.aspx
                             Image source = new Bitmap(fullPhysicalPath);
                             Image resizedImage = ResizeImage(source, width, height);
 
-                            resizedImage.Save(GetPathWithoutFilename(fullPhysicalPath, fileExt) + "-resized.jpg",
-                                              ImageFormat.Jpeg);
+                            resizedImage.Save(fullPhysicalPathResizedImage, ImageFormat.Jpeg);
 
                         }
                         catch
@@ -1418,23 +1386,33 @@ namespace C5FileManager.connectors.aspx
         /// <summary>
         /// Created a Unique filename for the given filename
         /// </summary>
-        /// <param name="filename">A full filename, e.g., c:\temp\myfile.tmp</param>
+        /// <param name="pFullPath">A full path to filename, e.g., c:\temp\myfile.tmp</param>
+        /// <param name="pPrefix">Prefix of new file name (resize, crop). "NULL" disables the prefix</param>
         /// <returns>A filename like c:\temp\myfile-1.tmp</returns>
-        public string CreateUniqueFilename(string filename)
+        public string CreateUniqueFilename(string pFullPath, string pPrefix)
         {
+            // get filename from fullpath
+            string filename = Path.GetFileNameWithoutExtension(pFullPath);
+            
+            // add file prefix to filename 
+            // used for resize and crop actions
+            if(!String.IsNullOrEmpty(pPrefix) && !filename.StartsWith(pPrefix))
+            {
+                filename = pPrefix + "-" + filename;
+            }
+
             string basename = Path.Combine(
-                                            Path.GetDirectoryName(filename), 
-                                            Path.GetFileNameWithoutExtension(filename)
+                                            Path.GetDirectoryName(pFullPath),
+                                            filename
                                            );
 
             // look for file name and create a unique one
             for (int i = 1; ; i++)
             {
-                string filePath = basename + "-" + i + Path.GetExtension(filename);
+                string filePath = basename + "-" + i + Path.GetExtension(pFullPath);
 
                 if (!File.Exists(filePath))
                 {
-
                     try
                     {
                         return filePath;
