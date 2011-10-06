@@ -176,7 +176,7 @@
         }
 
         // hide edit button in contextual menu when clicking on non-images
-        if (jQuery.inArray(data['File Type'], imagesExt) && cap == 'edit') {
+        if (jQuery.inArray(data['File Type'], imagesExt) == -1 && cap == 'edit') {
             return false;
         }
 
@@ -216,8 +216,7 @@
 
                 if (fname != '') {
                     foldername = cleanString(fname);
-                    var d = new Date(); // to prevent IE cache issues
-                    $.getJSON(fileConnector + '?mode=addfolder&path=' + $('#currentpath').val() + '&name=' + foldername + '&time=' + d.getMilliseconds(), function (result) {
+                    $.getJSON(fileConnector + '?mode=addfolder&path=' + $('#currentpath').val() + '&name=' + foldername, function (result) {
                         if (result['Code'] == 0) {
                             addFolder(result['Parent'], result['Name']);
                             $.getFolderInfo(result['Parent']);
@@ -603,8 +602,8 @@
 
     // Binds contextual menus to items in list and grid views.
     var setMenus = function (action, path) {
-        var d = new Date(); // to prevent IE cache issues
-        $.getJSON(fileConnector + '?mode=getinfo&path=' + path + '&time=' + d.getMilliseconds(), function (data) {
+
+        $.getJSON(fileConnector + '?mode=getinfo&path=' + path, function (data) {
             if ($('#fileinfo').data('view') == 'grid') {
                 var item = $('#fileinfo').find('img[alt="' + data['Path'] + '"]').parent();
             } else {
@@ -662,8 +661,7 @@
         });
 
         // Retrieve the data & populate the template.
-        var d = new Date(); // to prevent IE cache issues
-        $.getJSON(fileConnector + '?mode=getinfo&path=' + encodeURIComponent(file) + '&time=' + d.getMilliseconds(), function (data) {
+        $.getJSON(fileConnector + '?mode=getinfo&path=' + encodeURIComponent(file), function (data) {
             if (data['Code'] == 0) {
                 $('#fileinfo').find('h1').text(data['Filename']).attr('title', file);
                 $('#fileinfo').find('img').attr('src', data['Preview']);
@@ -696,8 +694,7 @@
         $('#fileinfo').html('<img id="activity" src="images/wait30trans.gif" width="30" height="30" />');
 
         // Retrieve the data and generate the markup.
-        var d = new Date(); // to prevent IE cache issues
-        var url = fileConnector + '?path=' + encodeURIComponent(path) + '&mode=getfolder&showThumbs=' + showThumbs + '&time=' + d.getMilliseconds();
+        var url = fileConnector + '?path=' + encodeURIComponent(path) + '&mode=getfolder&showThumbs=' + showThumbs;
         if ($.urlParam('type')) url += '&type=' + $.urlParam('type');
         $.getJSON(url, function (data) {
             var result = '';
@@ -783,7 +780,7 @@
             if (data.length > 0) {
                 // files and / or directories found
                 $('#fileinfo').html(result);
-            }else {
+            } else {
                 // nothing found
                 $('#fileinfo').html('<p class="nothing">' + lg.no_files_found + '</p>');
             }
@@ -839,8 +836,7 @@
     // Retrieve data (file/folder listing) for jqueryFileTree and pass the data back
     // to the callback function in jqueryFileTree
     var populateFileTree = function (path, callback) {
-        var d = new Date(); // to prevent IE cache issues
-        var url = fileConnector + '?path=' + encodeURIComponent(path) + '&mode=getfolder&showThumbs=' + showThumbs + '&time=' + d.getMilliseconds();
+        var url = fileConnector + '?path=' + encodeURIComponent(path) + '&mode=getfolder&showThumbs=' + showThumbs;
         if ($.urlParam('type')) url += '&type=' + $.urlParam('type');
         $.getJSON(url, function (data) {
             var result = '';

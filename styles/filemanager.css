@@ -55,6 +55,10 @@ body {
 	/* no margin or border allowed */
 }
 
+    .nothing {
+        margin-top: 20px;
+    }
+
 #splitter .vsplitbar {
 	width: 6px;
 	border-left: 1px solid #ccc;

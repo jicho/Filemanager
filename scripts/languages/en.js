@@ -54,5 +54,6 @@
 	"kb": "kb",
 	"mb": "mb",
 	"gb": "gb",
-	"edit_image_only": "You can only edit images"
+	"edit_image_only": "You can only edit images",
+	"no_files_found": "No files (or directories) found."
 }

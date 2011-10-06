@@ -1415,8 +1415,16 @@ namespace C5FileManager.connectors.aspx
             return (Image)bmp;
         }
 
-
-        // source: http://www.vcskicks.com/image-flip.php
+        /// <summary>
+        /// Flip image
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="flipHorizontally"></param>
+        /// <param name="flipVertically"></param>
+        /// <remarks>
+        /// Source: http://www.vcskicks.com/image-flip.php
+        /// </remarks>
+        /// <returns></returns>
         public static Image FlipImage(Image image, bool flipHorizontally, bool flipVertically)
         {
             Bitmap flippedImage = new Bitmap(image.Width, image.Height);

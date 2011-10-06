@@ -55,5 +55,6 @@
 	"kb": "ko",
 	"mb": "mo",
 	"gb": "go",
-	"edit_image_only": "Je kunt alleen afbeeldingen bewerken"
+	"edit_image_only": "You can only edit images",
+	"no_files_found": "No files (or directories) found."
 }

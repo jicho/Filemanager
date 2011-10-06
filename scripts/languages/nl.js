@@ -54,5 +54,6 @@
 	"kb": "kb",
 	"mb": "mb",
 	"gb": "gb",
-	"edit_image_only": "Je kunt alleen afbeeldingen bewerken"
+	"edit_image_only": "Je kunt alleen afbeeldingen bewerken",
+	"no_files_found": "Geen bestanden (of directories) aanwezig."
 }

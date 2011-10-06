@@ -50,5 +50,6 @@
 	"list_view": "切换到列表视图.",
 	"current_folder": "当前文件夹: ",
     "gotoroot": "根文件夹",
-	"edit_image_only": "Je kunt alleen afbeeldingen bewerken"
+	"edit_image_only": "You can only edit images",
+	"no_files_found": "No files (or directories) found."
 }
