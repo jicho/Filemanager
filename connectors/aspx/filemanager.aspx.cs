@@ -24,6 +24,8 @@ using System.IO;
  * - Added Switch for file replace / rename the old file upload new one
  * - Added image crop (button logic copied from http://forum.filemanager.corefive.com/topic/c5-filemanager-resize-upload-image#18308000000332003)
  * 
+ * WARNING: Switched to ashx version!!!!
+ * You can still use it, but some things may not work in the filemanger
  */
 
 namespace C5FileManager.connectors.aspx
@@ -96,6 +98,7 @@ namespace C5FileManager.connectors.aspx
             string response = "";
 
             Response.ContentType = "text/plain";
+            Response.ContentEncoding = Encoding.UTF8;
 
             if (Request.QueryString["mode"] != null)
             {
@@ -170,7 +173,7 @@ namespace C5FileManager.connectors.aspx
 
         private string GetInfo(string path, string fullPhysicalPath)
         {
-            if (Request.QueryString["path"] == null)
+            if (String.IsNullOrEmpty(Request.QueryString["path"]))
             {
                 return "";
             }
@@ -189,9 +192,8 @@ namespace C5FileManager.connectors.aspx
             if (File.Exists(fullPhysicalPath))
             {
                 // file
-                FileInfo fi = new FileInfo(fullPhysicalPath);
-                fileName = fi.Name;
-                fileType = fi.Extension.Replace(".", "");
+                fileName = Path.GetFileName(fullPhysicalPath);
+                fileType = Path.GetExtension(fullPhysicalPath).Replace(".", "");
 
                 if (fileType.Length == 0)
                 {
@@ -201,8 +203,6 @@ namespace C5FileManager.connectors.aspx
                 if (IsImageExtension(fileType))
                 {
                     // document is image
-
-                    // ORIGINAL: preview = path;
                     if (Request.QueryString["showThumbs"] == "true")
                     {
                         // document overview
@@ -227,6 +227,7 @@ namespace C5FileManager.connectors.aspx
                     preview = BaseFilemanagerLocation + "images/fileicons/" + GetFileTypeIconName(fileType) + ".png";
                 }
 
+                FileInfo fi = new FileInfo(fullPhysicalPath);
                 dateCreated = fi.CreationTime.ToString();
                 dateModified = fi.LastWriteTime.ToString();
                 size = fi.Length.ToString();
@@ -298,8 +299,7 @@ namespace C5FileManager.connectors.aspx
         private string GetPreviewImage(string originalPath, string originalFullPhysicalPath)
         {
             // get filename
-            FileInfo fi = new FileInfo(originalFullPhysicalPath);
-            string originalFileName = fi.Name;
+            string originalFileName = Path.GetFileName(originalFullPhysicalPath);
 
             // create thumbnail filename
             string thumbFileName = GetThumbNameFromFullPhysicalPath(originalFullPhysicalPath);
@@ -324,11 +324,7 @@ namespace C5FileManager.connectors.aspx
         /// <returns></returns>
         private static string GetThumbNameFromFullPhysicalPath(string path)
         {
-            FileInfo fi = new FileInfo(path);
-            string originalFileName = fi.Name;
-            string thumbExtension = fi.Extension;
-            
-            return "thumb_" + originalFileName.Substring(0, originalFileName.Length - thumbExtension.Length) + ".png";
+            return "thumb_" + Path.ChangeExtension(Path.GetFileName(path), "png");
         }
 
         /// <summary>
@@ -401,7 +397,7 @@ namespace C5FileManager.connectors.aspx
 
         private string GetInfo()
         {
-            if (Request.QueryString["path"] == null)
+            if (String.IsNullOrEmpty(Request.QueryString["path"]))
             {
                 return "";
             }
@@ -419,7 +415,7 @@ namespace C5FileManager.connectors.aspx
         /// <returns></returns>
         private string GetFolder()
         {
-            if (Request.QueryString["path"] == null)
+            if (String.IsNullOrEmpty(Request.QueryString["path"]))
             {
                 return "";
             }
@@ -483,12 +479,12 @@ namespace C5FileManager.connectors.aspx
         /// <returns></returns>
         private string Rename()
         {
-            if (Request.QueryString["old"] == null)
+            if (String.IsNullOrEmpty(Request.QueryString["old"]))
             {
                 return "";
             }
 
-            if (Request.QueryString["new"] == null)
+            if (String.IsNullOrEmpty(Request.QueryString["new"]))
             {
                 return "";
             }
@@ -538,9 +534,9 @@ namespace C5FileManager.connectors.aspx
 
                     // create thumbnail filename
                     string thumbOldFileName = GetThumbNameFromFullPhysicalPath(fullPhysicalPath);
-                    string thumbNewFileName = "thumb_" + newName.Substring(0, newName.Length - GetFileExtension(newName).Length) + "png";
-                    string oldThumbFullPhysicalPath = RemoveFromEndOfString(fullPhysicalPath, oldName) + thumbOldFileName;
-                    string newThumbFullPhysicalPath = RemoveFromEndOfString(fullPhysicalPath, oldName) + thumbNewFileName;
+                    string thumbNewFileName = "thumb_" + Path.ChangeExtension(newName, "png");
+                    string oldThumbFullPhysicalPath = Path.Combine(Path.GetDirectoryName(fullPhysicalPath), thumbOldFileName);
+                    string newThumbFullPhysicalPath = Path.Combine(Path.GetDirectoryName(fullPhysicalPath), thumbNewFileName);
 
                     if (File.Exists(oldThumbFullPhysicalPath))
                     {
@@ -598,7 +594,10 @@ namespace C5FileManager.connectors.aspx
         /// <returns></returns>
         private string Delete()
         {
-            if (Request.QueryString["path"] == null) return "";
+            if (String.IsNullOrEmpty(Request.QueryString["path"]))
+            {
+                return "";
+            }
 
 
             string path = Request.QueryString["path"];
@@ -610,8 +609,7 @@ namespace C5FileManager.connectors.aspx
             if (File.Exists(fullPhysicalPath))
             {
                 // get file name
-                FileInfo fi = new FileInfo(fullPhysicalPath);
-                string fileName = fi.Name;
+                string fileName = Path.GetFileName(fullPhysicalPath);
                  
                 try
                 {
@@ -629,7 +627,7 @@ namespace C5FileManager.connectors.aspx
                         }
                         catch
                         {
-                            error = "System can't delete thumbnail... You should not see this warning!";
+                            error = "System can't delete thumbnail.";
                             code = "-1";
                         }
                     }
@@ -680,9 +678,6 @@ namespace C5FileManager.connectors.aspx
 
             if (Directory.Exists(fullPhysicalPath))
             {
-                FileInfo fi = new FileInfo(fullPhysicalPath);
-                string fileExt = fi.Extension.Replace(".", "");
-
                 if (Request.Files["newfile"] != null)
                 {
                     System.Web.HttpPostedFile inpFile = Request.Files["newfile"];
@@ -764,7 +759,7 @@ namespace C5FileManager.connectors.aspx
         /// <returns></returns>
         private string AddFolder()
         {
-            if (Request.QueryString["path"] == null)
+            if (String.IsNullOrEmpty(Request.QueryString["path"]))
             {
                 return "";
             }
@@ -824,7 +819,7 @@ namespace C5FileManager.connectors.aspx
         private string QuickUpload()
         {
             // editor version (FCK or CK)
-            if (Request.QueryString["version"] == null)
+            if (String.IsNullOrEmpty(Request.QueryString["version"]))
             {
                 return "";
             }
@@ -928,7 +923,7 @@ namespace C5FileManager.connectors.aspx
         /// <returns></returns>
         private string Crop()
         {
-            if (Request.QueryString["path"] == null)
+            if (String.IsNullOrEmpty(Request.QueryString["path"]))
             {
                 return "";
             }
@@ -955,12 +950,11 @@ namespace C5FileManager.connectors.aspx
                 if (File.Exists(fullPhysicalPath))
                 {
                     // create new file name
-                    FileInfo fi = new FileInfo(fullPhysicalPath);
-                    string fileExt = fi.Extension;
+                    string fileExt = Path.GetExtension(fullPhysicalPath);
 
                     fullPhysicalPathCroppedImage = RemoveFromEndOfString(CreateUniqueFilename(fullPhysicalPath, "crop"), fileExt) + ".jpg";
 
-                    if (IsImageExtension(fileExt.Replace(".", "")))
+                    if (IsImageExtension((fileExt??string.Empty).Replace(".", "")))
                     {
                         // crop image
                         try
@@ -1006,7 +1000,7 @@ namespace C5FileManager.connectors.aspx
         /// <returns></returns>
         private string Resize()
         {
-            if (Request.QueryString["path"] == null)
+            if (String.IsNullOrEmpty(Request.QueryString["path"]))
             {
                 return "";
             }
@@ -1032,12 +1026,11 @@ namespace C5FileManager.connectors.aspx
                 if (File.Exists(fullPhysicalPath))
                 {
                     // create new file name
-                    FileInfo fi = new FileInfo(fullPhysicalPath);
-                    string fileExt = fi.Extension;
+                    string fileExt = Path.GetExtension(fullPhysicalPath);
 
                     fullPhysicalPathResizedImage = RemoveFromEndOfString(CreateUniqueFilename(fullPhysicalPath, "resize"), fileExt) + ".jpg";
 
-                    if (IsImageExtension(fileExt.Replace(".", "")))
+                    if (IsImageExtension((fileExt ?? string.Empty).Replace(".", "")))
                     {
                         // resize image
                         try
@@ -1082,7 +1075,7 @@ namespace C5FileManager.connectors.aspx
         /// <returns></returns>
         private string FlipHorizontal()
         {
-            if (Request.QueryString["path"] == null)
+            if (String.IsNullOrEmpty(Request.QueryString["path"]))
             {
                 return "";
             }
@@ -1098,14 +1091,11 @@ namespace C5FileManager.connectors.aspx
             if (File.Exists(fullPhysicalPath))
             {
                 // create new file name
-                FileInfo fi = new FileInfo(fullPhysicalPath);
-                string fileExt = fi.Extension;
-
+                string fileExt = Path.GetExtension(fullPhysicalPath);
                 fullPhysicalPathFlippedImage = RemoveFromEndOfString(CreateUniqueFilename(fullPhysicalPath, "flipped"), fileExt) + ".jpg";
 
-                if (IsImageExtension(fileExt.Replace(".", "")))
+                if (IsImageExtension((fileExt??string.Empty).Replace(".", "")))
                 {
-                    
                     // flip image
                     try
                     {
@@ -1150,7 +1140,7 @@ namespace C5FileManager.connectors.aspx
         /// </summary>
         private void Download()
         {
-            if (Request.QueryString["path"] == null)
+            if (String.IsNullOrEmpty(Request.QueryString["path"]))
             {
                 return;
             }
@@ -1256,7 +1246,6 @@ namespace C5FileManager.connectors.aspx
         ///  Ported to C# by Are Bjolseth, teleplan.no 
         public static string EnquoteJson(string s)
         {
-            //if (s == null || s.Length == 0)
             if(string.IsNullOrEmpty(s))
             {
                 return "\"\"";
@@ -1350,11 +1339,11 @@ namespace C5FileManager.connectors.aspx
             height = 0;
             width = 0;
 
-            System.Drawing.Image sourceImage;
+            Image sourceImage;
 
             try
             {
-                sourceImage = System.Drawing.Image.FromFile(filePath);
+                sourceImage = Image.FromFile(filePath);
 
                 height = sourceImage.Height;
                 width = sourceImage.Width;

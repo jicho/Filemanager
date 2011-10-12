@@ -19,7 +19,8 @@ var showFullPath = false;
 var browseOnly = false;
 
 // Set this to the server side language you wish to use.
-var lang = 'aspx'; // options: php, jsp, lasso, asp, cfm // we are looking for contributors for lasso, python connectors (partially developed)
+// options: php, jsp, lasso, asp, cfm (download the latest version of the extenstions from the Filemanger mainbranche
+var lang = 'ashx';
 
 var am = document.location.pathname.substring(1, document.location.pathname.lastIndexOf('/') + 1);
 
@@ -33,4 +34,5 @@ var showThumbs = true;
 var showEdit = true;
 
 // Allowed image extensions when type is 'image'
+// Don't forget to change the image extension settings in the filemanger.ashx when making changes!
 var imagesExt = ['jpg', 'jpeg', 'gif', 'png'];

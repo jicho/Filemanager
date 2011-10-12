@@ -56,7 +56,8 @@ FileManager currently includes connectors for PHP, JSP, lasso, ASP and CFM in th
 	JSP: .../connectors/jsp/filemanager.jsp
 	lasso: .../connectors/lasso/filemanager.lasso
 	ASP: .../connectors/asp/filemanager.asp
-    ASPX: .../connectors/asp/filemanager.aspx
+    ASPX: .../connectors/aspx/filemanager.aspx (OLD VERSION: Switched to .ashx version!)
+    ASHX: .../connectors/ashx/filemanager.ashx
 	CFM: .../connectors/cfm/filemanager.cfm
 
 As long as a script exists at this location to respond to requests, you may split up the code (external libraries, configuration files, etc.) however you see fit.

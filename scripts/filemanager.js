@@ -877,7 +877,7 @@
         // check: file extension = image
         var newfileSplitted = data['Path'].toLowerCase().split('.');
 
-        if (jQuery.inArray(newfileSplitted[newfileSplitted.length - 1], imagesExt) > 0) {
+        if (jQuery.inArray(newfileSplitted[newfileSplitted.length], imagesExt) == -1) {
             var centerWidth = (screen.width - windowWidth) / 2;
             var centerHeight = (screen.height - windowHeight) / 2;
 
@@ -978,14 +978,14 @@
                 $('#upload').attr('disabled', true);
                 $('#upload span').addClass('loading').text(lg.loading_data);
                 if ($.urlParam('type').toString().toLowerCase() == 'images') {
-                    
+
                     // Test if uploaded file extension is in valid image extensions
                     var newfileSplitted = $('#newfile', form).val().toLowerCase().split('.');
-                    
+                    alert(newfileSplitted[newfileSplitted.length - 1], imagesExt);
                     if (jQuery.inArray(newfileSplitted[newfileSplitted.length - 1], imagesExt) > 0) {
                         return true;
                     }
-                    
+
                     $.prompt(lg.UPLOAD_IMAGES_ONLY, { timeout: 2000 });
                     return false;
                 }
