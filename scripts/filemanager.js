@@ -981,7 +981,7 @@
 
                     // Test if uploaded file extension is in valid image extensions
                     var newfileSplitted = $('#newfile', form).val().toLowerCase().split('.');
-                    alert(newfileSplitted[newfileSplitted.length - 1], imagesExt);
+
                     if (jQuery.inArray(newfileSplitted[newfileSplitted.length - 1], imagesExt) > 0) {
                         return true;
                     }
