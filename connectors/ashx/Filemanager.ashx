@@ -33,9 +33,6 @@ public class Filemanager : IHttpHandler
     // Options are: rename / replace
     public string ExistingFileOption = "rename";
 
-    // Allowed to access "userfiles"
-    public bool AccessAllowed = CheckAuthentication();
-
     // Allowed files to upload 
     public static string[] AllowedExtensions = new [] { "jpg", "jpeg", "png", "gif", "bmp", // images
                                                             "txt", "rtf", "doc", "docx", "pdf", // documents
@@ -45,32 +42,23 @@ public class Filemanager : IHttpHandler
                                                             "zip", "rar", // archive
                                                             "swf" };
 
-    /// <summary>
-    /// Check authentication
-    /// </summary>
-    /// <remarks>
-    /// Add logic to check if user is allowed to upload / edit / delete files
-    /// </remarks>
-    /// <returns>true or false</returns>
-    public static bool CheckAuthentication()
-    {
-        // ORIGINAL example: return (Session["SUCCESSFULLOGINED"] != null && Session["SUCCESSFULLOGINED"].ToString() == "Yes"); //return false;
-        return true;
-    }
 
     /*************************************************************************
      * /CONFIGURATION
      * **********************************************************************/       
 
-    
     public void ProcessRequest (HttpContext context) 
     {
         context.Response.ClearHeaders();
         context.Response.ClearContent();
         context.Response.Clear();
 
+        // Allowed to access "userfiles"
+        // Places here so you can access your session info
+        bool accessAllowed = true;
+
         // sorry, you're not allowed to be here
-        if (!AccessAllowed)
+        if (!accessAllowed)
         {
             context.Response.Write(CreateError("No Permission"));
             return;
