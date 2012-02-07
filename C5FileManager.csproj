@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D6EFF7DC-9E4B-4491-90EF-FB62F40175ED}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>C5FileManager</RootNamespace>
+    <AssemblyName>C5FileManager</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="connectors\ashx\MIT-LICENSE.txt" />
+    <Content Include="connectors\aspx\filemanager.aspx" />
+    <Content Include="connectors\aspx\MIT-LICENSE.txt" />
+    <Content Include="connectors\asp\filemanager.asp" />
+    <Content Include="connectors\asp\filemanager.class.asp" />
+    <Content Include="connectors\asp\filemanager.config.asp" />
+    <Content Include="connectors\jsp\libraries\java\src\com\nartex\FileManager.java" />
+    <Content Include="connectors\jsp\libraries\java\src\org\json\JSONArray.java" />
+    <Content Include="connectors\jsp\libraries\java\src\org\json\JSONException.java" />
+    <Content Include="connectors\jsp\libraries\java\src\org\json\JSONObject.java" />
+    <Content Include="connectors\jsp\libraries\java\src\org\json\JSONString.java" />
+    <Content Include="connectors\jsp\libraries\java\src\org\json\JSONTokener.java" />
+    <Content Include="connectors\jsp\ReadMe.txt" />
+    <Content Include="connectors\lasso\client_params.inc" />
+    <Content Include="connectors\lasso\dictionary.inc" />
+    <Content Include="connectors\lasso\encode_json.inc" />
+    <Content Include="connectors\lasso\encode_urlpath.inc" />
+    <Content Include="connectors\lasso\filemanager.inc" />
+    <Content Include="images\16arrow-down.png" />
+    <Content Include="images\16arrow-up.png" />
+    <Content Include="images\accept.png" />
+    <Content Include="images\add.png" />
+    <Content Include="images\ajax-loader.gif" />
+    <Content Include="images\application_view_icons.png" />
+    <Content Include="images\application_view_list.png" />
+    <Content Include="images\bin_closed.png" />
+    <Content Include="images\btnOFF.gif" />
+    <Content Include="images\btnON.gif" />
+    <Content Include="images\bullet_arrow_down.png" />
+    <Content Include="images\bullet_arrow_up.png" />
+    <Content Include="images\colSortOFF.gif" />
+    <Content Include="images\disk.png" />
+    <Content Include="images\edit.png" />
+    <Content Include="images\fileicons\aac.png" />
+    <Content Include="images\fileicons\avi.png" />
+    <Content Include="images\fileicons\bmp.png" />
+    <Content Include="images\fileicons\chm.png" />
+    <Content Include="images\fileicons\css.png" />
+    <Content Include="images\fileicons\default.png" />
+    <Content Include="images\fileicons\dll.png" />
+    <Content Include="images\fileicons\doc.png" />
+    <Content Include="images\fileicons\fla.png" />
+    <Content Include="images\fileicons\gif.png" />
+    <Content Include="images\fileicons\htm.png" />
+    <Content Include="images\fileicons\html.png" />
+    <Content Include="images\fileicons\ini.png" />
+    <Content Include="images\fileicons\jar.png" />
+    <Content Include="images\fileicons\jpeg.png" />
+    <Content Include="images\fileicons\jpg.png" />
+    <Content Include="images\fileicons\js.png" />
+    <Content Include="images\fileicons\lasso.png" />
+    <Content Include="images\fileicons\mdb.png" />
+    <Content Include="images\fileicons\mov.png" />
+    <Content Include="images\fileicons\mp3.png" />
+    <Content Include="images\fileicons\mpg.png" />
+    <Content Include="images\fileicons\other_image.png" />
+    <Content Include="images\fileicons\other_movie.png" />
+    <Content Include="images\fileicons\other_music.png" />
+    <Content Include="images\fileicons\other_music2.png" />
+    <Content Include="images\fileicons\pdf.png" />
+    <Content Include="images\fileicons\php.png" />
+    <Content Include="images\fileicons\png.png" />
+    <Content Include="images\fileicons\ppt.png" />
+    <Content Include="images\fileicons\py.png" />
+    <Content Include="images\fileicons\rb.png" />
+    <Content Include="images\fileicons\real.png" />
+    <Content Include="images\fileicons\reg.png" />
+    <Content Include="images\fileicons\rtf.png" />
+    <Content Include="images\fileicons\sql.png" />
+    <Content Include="images\fileicons\swf.png" />
+    <Content Include="images\fileicons\txt.png" />
+    <Content Include="images\fileicons\vbs.png" />
+    <Content Include="images\fileicons\wav.png" />
+    <Content Include="images\fileicons\wma.png" />
+    <Content Include="images\fileicons\wmv.png" />
+    <Content Include="images\fileicons\xls.png" />
+    <Content Include="images\fileicons\xml.png" />
+    <Content Include="images\fileicons\xsl.png" />
+    <Content Include="images\fileicons\zip.png" />
+    <Content Include="images\fileicons\_Close.png" />
+    <Content Include="images\fileicons\_Documents.png" />
+    <Content Include="images\fileicons\_Favorites.png" />
+    <Content Include="images\fileicons\_Image.png" />
+    <Content Include="images\fileicons\_Movie.png" />
+    <Content Include="images\fileicons\_Music.png" />
+    <Content Include="images\fileicons\_Net.png" />
+    <Content Include="images\fileicons\_Open.png" />
+    <Content Include="images\fileicons\_ProgramFiles.png" />
+    <Content Include="images\fileicons\_Works.png" />
+    <Content Include="images\folder_add.png" />
+    <Content Include="images\house.png" />
+    <Content Include="images\parentfolder.png" />
+    <Content Include="images\pencil.png" />
+    <Content Include="images\wait30trans.gif" />
+    <Content Include="index.html" />
+    <Content Include="plugins\image-editor\index.html" />
+    <Content Include="plugins\image-editor\languages\en.js" />
+    <Content Include="plugins\image-editor\languages\nl.js" />
+    <Content Include="plugins\image-editor\MIT-LICENSE.txt" />
+    <Content Include="plugins\image-editor\scripts.js" />
+    <Content Include="plugins\image-editor\scripts\jquery.ba-replacetext.js" />
+    <Content Include="plugins\image-editor\style.css" />
+    <Content Include="ReadMe.txt" />
+    <Content Include="ReadMe2.txt" />
+    <Content Include="scripts\filemanager.js" />
+    <Content Include="scripts\jquery-1.6.4.min.js" />
+    <Content Include="scripts\jquery.contextmenu\images\cut.png" />
+    <Content Include="scripts\jquery.contextmenu\images\door.png" />
+    <Content Include="scripts\jquery.contextmenu\images\page_white_copy.png" />
+    <Content Include="scripts\jquery.contextmenu\images\page_white_delete.png" />
+    <Content Include="scripts\jquery.contextmenu\images\page_white_edit.png" />
+    <Content Include="scripts\jquery.contextmenu\images\page_white_paste.png" />
+    <Content Include="scripts\jquery.contextmenu\jquery.contextMenu-1.01.css" />
+    <Content Include="scripts\jquery.contextmenu\jquery.contextMenu-1.01.js" />
+    <Content Include="scripts\jquery.filetree\images\application.png" />
+    <Content Include="scripts\jquery.filetree\images\code.png" />
+    <Content Include="scripts\jquery.filetree\images\css.png" />
+    <Content Include="scripts\jquery.filetree\images\db.png" />
+    <Content Include="scripts\jquery.filetree\images\directory.png" />
+    <Content Include="scripts\jquery.filetree\images\doc.png" />
+    <Content Include="scripts\jquery.filetree\images\file.png" />
+    <Content Include="scripts\jquery.filetree\images\film.png" />
+    <Content Include="scripts\jquery.filetree\images\flash.png" />
+    <Content Include="scripts\jquery.filetree\images\folder_open.png" />
+    <Content Include="scripts\jquery.filetree\images\html.png" />
+    <Content Include="scripts\jquery.filetree\images\java.png" />
+    <Content Include="scripts\jquery.filetree\images\linux.png" />
+    <Content Include="scripts\jquery.filetree\images\music.png" />
+    <Content Include="scripts\jquery.filetree\images\pdf.png" />
+    <Content Include="scripts\jquery.filetree\images\php.png" />
+    <Content Include="scripts\jquery.filetree\images\picture.png" />
+    <Content Include="scripts\jquery.filetree\images\ppt.png" />
+    <Content Include="scripts\jquery.filetree\images\psd.png" />
+    <Content Include="scripts\jquery.filetree\images\ruby.png" />
+    <Content Include="scripts\jquery.filetree\images\script.png" />
+    <Content Include="scripts\jquery.filetree\images\spinner.gif" />
+    <Content Include="scripts\jquery.filetree\images\txt.png" />
+    <Content Include="scripts\jquery.filetree\images\xls.png" />
+    <Content Include="scripts\jquery.filetree\images\zip.png" />
+    <Content Include="scripts\jquery.filetree\jqueryFileTree.css" />
+    <Content Include="scripts\jquery.filetree\jqueryFileTree.js" />
+    <Content Include="scripts\jquery.form-2.63.js" />
+    <Content Include="scripts\jquery.imgareaselect\css\border-anim-h.gif" />
+    <Content Include="scripts\jquery.imgareaselect\css\border-anim-v.gif" />
+    <Content Include="scripts\jquery.imgareaselect\css\border-h.gif" />
+    <Content Include="scripts\jquery.imgareaselect\css\border-v.gif" />
+    <Content Include="scripts\jquery.imgareaselect\css\imgareaselect-animated.css" />
+    <Content Include="scripts\jquery.imgareaselect\css\imgareaselect-default.css" />
+    <Content Include="scripts\jquery.imgareaselect\css\imgareaselect-deprecated.css" />
+    <Content Include="scripts\jquery.imgareaselect\GPL-LICENSE.txt" />
+    <Content Include="scripts\jquery.imgareaselect\jquery.imgareaselect.js" />
+    <Content Include="scripts\jquery.imgareaselect\jquery.imgareaselect.min.js" />
+    <Content Include="scripts\jquery.imgareaselect\jquery.imgareaselect.pack.js" />
+    <Content Include="scripts\jquery.imgareaselect\MIT-LICENSE.txt" />
+    <Content Include="scripts\jquery.impromptu-3.1.min.js" />
+    <Content Include="scripts\jquery.splitter\hgrabber.gif" />
+    <Content Include="scripts\jquery.splitter\jquery.splitter-1.5.1.js" />
+    <Content Include="scripts\jquery.splitter\jquery.splitter.css" />
+    <Content Include="scripts\jquery.splitter\vgrabber.gif" />
+    <Content Include="scripts\jquery.tablesorter-2.0.5b.min.js" />
+    <Content Include="scripts\languages\ca.js" />
+    <Content Include="scripts\languages\cs.js" />
+    <Content Include="scripts\languages\da.js" />
+    <Content Include="scripts\languages\de.js" />
+    <Content Include="scripts\languages\en.js" />
+    <Content Include="scripts\languages\es.js" />
+    <Content Include="scripts\languages\fi.js" />
+    <Content Include="scripts\languages\fr.js" />
+    <Content Include="scripts\languages\he.js" />
+    <Content Include="scripts\languages\hu.js" />
+    <Content Include="scripts\languages\it.js" />
+    <Content Include="scripts\languages\ja.js" />
+    <Content Include="scripts\languages\nl.js" />
+    <Content Include="scripts\languages\pl.js" />
+    <Content Include="scripts\languages\pt.js" />
+    <Content Include="scripts\languages\ru.js" />
+    <Content Include="scripts\languages\sv.js" />
+    <Content Include="scripts\languages\vn.js" />
+    <Content Include="scripts\languages\zh-cn.js" />
+    <Content Include="styles\filemanager.css" />
+    <Content Include="styles\ie.css" />
+    <Content Include="styles\reset.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="connectors\aspx\filemanager.aspx.cs">
+      <DependentUpon>filemanager.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="connectors\aspx\filemanager.aspx.designer.cs">
+      <DependentUpon>filemanager.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="userfiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="connectors\ashx\Filemanager.ashx" />
+    <Content Include="connectors\ashx\Filemanager-origineel.ashx" />
+    <None Include="connectors\cfm\Application.cfc" />
+    <None Include="connectors\cfm\filemanager.cfm" />
+    <None Include="connectors\cfm\filemanager.config.cfm" />
+    <None Include="connectors\cfm\filemanager\FileManager.cfc" />
+    <None Include="connectors\cfm\filemanager\filemanager\accessors.cfm" />
+    <None Include="connectors\cfm\filemanager\filemanager\cfml.cfm" />
+    <None Include="connectors\cfm\filemanager\filemanager\core.cfm" />
+    <None Include="connectors\cfm\filemanager\filemanager\functions.cfm" />
+    <None Include="connectors\cfm\filemanager\filemanager\init.cfm" />
+    <None Include="connectors\cfm\filemanager\filemanager\language.cfm" />
+    <None Include="connectors\cfm\filemanager\filemanager\utils.cfm" />
+    <None Include="connectors\cfm\plugins\Amazon.cfc" />
+    <None Include="connectors\cfm\root.cfm" />
+    <None Include="connectors\jsp\auth.jsp" />
+    <None Include="connectors\jsp\config.properties" />
+    <None Include="connectors\jsp\filemanager.jsp" />
+    <None Include="connectors\jsp\libraries\java\bin\com\nartex\FileManager.class" />
+    <None Include="connectors\jsp\libraries\java\bin\org\json\JSONArray.class" />
+    <None Include="connectors\jsp\libraries\java\bin\org\json\JSONException.class" />
+    <None Include="connectors\jsp\libraries\java\bin\org\json\JSONObject%24Null.class" />
+    <None Include="connectors\jsp\libraries\java\bin\org\json\JSONObject.class" />
+    <None Include="connectors\jsp\libraries\java\bin\org\json\JSONString.class" />
+    <None Include="connectors\jsp\libraries\java\bin\org\json\JSONTokener.class" />
+    <None Include="connectors\lasso\filemanager.config.inc.default" />
+    <None Include="connectors\lasso\filemanager.lasso" />
+    <None Include="connectors\php\filemanager.class.php" />
+    <None Include="connectors\php\filemanager.config.php" />
+    <None Include="connectors\php\filemanager.php" />
+    <None Include="connectors\php\inc\filemanager.inc.php" />
+    <None Include="connectors\php\inc\JSON.php" />
+    <None Include="connectors\php\plugins\rsc\cloudfiles.php" />
+    <None Include="connectors\php\plugins\rsc\cloudfiles_exceptions.php" />
+    <None Include="connectors\php\plugins\rsc\cloudfiles_http.php" />
+    <None Include="connectors\php\plugins\rsc\COPYING" />
+    <None Include="connectors\php\plugins\rsc\filemanager.rsc.class.php" />
+    <None Include="connectors\php\plugins\rsc\filemanager.rsc.config.php" />
+    <None Include="connectors\php\plugins\rsc\share\cacert.pem" />
+    <None Include="connectors\php\plugins\rsc\share\magic" />
+    <None Include="connectors\php\plugins\rsc\share\magic.mgc" />
+    <None Include="connectors\php\plugins\rsc\share\magic.mime" />
+    <None Include="connectors\php\plugins\rsc\share\magic.mime.mgc" />
+    <None Include="connectors\python\filemanager.py" />
+    <Content Include="scripts\filemanager.config.js" />
+    <None Include="scripts\filemanager.config.js.default" />
+    <Content Include="web.config" />
+    <Content Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </Content>
+    <Content Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>50279</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
